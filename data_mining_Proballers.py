@@ -42,14 +42,44 @@ def get_leagues_df(league_urls):
     return leagues
 
 
+def get_player_id_card(player_url):
+    """ Returns a dictionary of player ID card:
+        input: url to player page
+        output: dictionary
+        example : {'id': '74971', 'name': 'Deni Avdija', 'Date of birth': 'Jan 3, 2001',
+                'Height': '2m05 / 6-9', 'Position': 'SF','Nationality': 'Israeli',
+                'Draft': 'round 1, pick 9 (2020)'} """
+
+    source = requests.get(player_url).text
+    soup = BeautifulSoup(source, 'lxml')
+
+    id_card = soup.find('div', class_="home-player__card-identity__profil__card")
+
+    id = player_url.split(r'/')[-2]
+    name = id_card.find('h3', itemprop = "name").text.strip()
+
+    id_card_dict ={'id' : id, 'name' : name}
+
+    for parag in id_card.find_all('p', class_ = 'home-player__card-identity__profil__card__infos__entry'):
+        words = [w.strip() for w in parag.text.split(':')]
+        key = words[0]
+        value = re.sub('\s+',' ',words[1])
+        id_card_dict[key] = value
+
+    return id_card_dict
+
+
+
 
 
 def main():
-    league_urls = get_league_urls()
-    leagues = get_leagues_df(league_urls)
-    print(leagues[['id', 'name']].head())
-
-
+#     league_urls = get_league_urls()
+#     leagues = get_leagues_df(league_urls)
+#     print(leagues[['id', 'name']].head())
+    player_url = 'https://www.proballers.com/basketball/player/74971/deni-avdija'
+    print(get_player_id_card(player_url))
+#
+#
 if __name__ == '__main__':
     main()
 
