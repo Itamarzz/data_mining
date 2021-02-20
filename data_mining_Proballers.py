@@ -8,18 +8,50 @@
 
 import requests
 from bs4 import BeautifulSoup
+import re
+import validators
+import pandas as pd
+
+def get_league_urls():
+    """ Returns a list of all league urls """
+
+    source = requests.get('https://www.proballers.com/').text
+    soup = BeautifulSoup(source, 'lxml')
+
+    league_urls= []
+    league_urls.append('https://www.proballers.com/basketball/league/177/euroleague') # euroleague is a standalone league
+
+    for league in soup.find_all('a', href=re.compile(r"/basketball/league")):
+        if validators.url(league['href']):
+            league_urls.append(league['href'])
+
+    return league_urls
+
+def get_leagues_df(league_urls):
+    """ Returns leagues table as a panda's data frame with the columns: id, name, url
+        input : list of league urls """
+        # TODO add Country of league and continent (america, wnba, europe etc.)
+
+    leagues = pd.DataFrame(columns = ['id', 'name', 'url'])
+    for i in range(len(league_urls)):
+        league = league_urls[i]
+        league_name = league.split(r'/')[-1]
+        league_id = league.split(r'/')[-2]
+        leagues.loc[i] = (league_id, league_name, league)
+
+    return leagues
 
 
-url = 'https://www.proballers.com/'
-r = requests.get(url)
-r.status_code
-r.status_code == requests.codes.OK
-requests.codes['temporary_redirect']
-requests.codes.teapot
-requests.codes['o/']
 
 
+def main():
+    league_urls = get_league_urls()
+    leagues = get_leagues_df(league_urls)
+    print(leagues[['id', 'name']].head())
 
+
+if __name__ == '__main__':
+    main()
 
 
 
