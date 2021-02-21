@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import re
 import random
 
+
 def get_player_id_card(player_url):
     """ Returns a dictionary of player ID card:
         input: url to player page
@@ -21,14 +22,14 @@ def get_player_id_card(player_url):
     id_card = soup.find('div', class_="home-player__card-identity__profil__card")
 
     p_id = player_url.split(r'/')[-1]
-    name = id_card.find('h3', itemprop = "name").text.strip()
+    name = id_card.find('h3', itemprop="name").text.strip()
 
-    id_card_dict ={'p_id' : p_id, 'name' : name}
+    id_card_dict = {'p_id': p_id, 'name': name}
 
-    for parag in id_card.find_all('p', class_ = 'home-player__card-identity__profil__card__infos__entry'):
+    for parag in id_card.find_all('p', class_='home-player__card-identity__profil__card__infos__entry'):
         words = [w.strip() for w in parag.text.split(':')]
         key = words[0]
-        value = re.sub('\s+',' ',words[1])
+        value = re.sub('\s+', ' ', words[1])
         id_card_dict[key] = value
 
     return id_card_dict
@@ -62,12 +63,12 @@ def test_get_player_id_card(num_of_iteration):
     if len(set_of_errors) > 0:
         print('here is all errors from this run :')
         for e in set_of_errors:
-            print('--------------\n',e)
+            print('--------------\n', e)
     else:
         print('\nno errors in test run !')
 
-def main():
 
+def main():
     NUM_OF_ITERATIONS = 20
 
     test_get_player_id_card(NUM_OF_ITERATIONS)
@@ -75,9 +76,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-
-

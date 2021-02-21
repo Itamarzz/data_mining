@@ -40,7 +40,7 @@ def get_leagues_df(league_urls):
 def main():
     league_urls = get_league_urls()
     leagues = get_leagues_df(league_urls)
-    print(leagues[['id', 'name']].sample(5))
+    print(leagues[['id', 'name']].sample(6))
 
 
 if __name__ == '__main__':

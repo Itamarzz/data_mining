@@ -1,5 +1,5 @@
-
 from dateutil.parser import parse
+
 
 def get_height_meters(height):
     """ Returns height in meters as a float.
@@ -10,7 +10,7 @@ def get_height_meters(height):
     height_m = height_m.replace('m', '.')
     height_m = float(height_m)
 
-    return  height_m
+    return height_m
 
 
 def get_player_id_dict(id_card):
