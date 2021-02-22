@@ -14,9 +14,10 @@ def get_all_seasons(url):
             seasons.append(link['href'].split("/")[5])
     return seasons
 
+# TODO: Explicar porque sirve poner en el link 2020.
 
 def main():
-    url = "https://www.proballers.com/basketball/league/3/nba/2020/teams"
+    url = "https://www.proballers.com/basketball/league/3/nba/2020/players"
     assert get_all_seasons(url) == [str(i) for i in range(2020, 1948, -1)]
     url = "https://www.proballers.com/basketball/league/177/euroleague/2020/teams"
     assert get_all_seasons(url) == [str(i) for i in range(2020, 1999, -1)]

@@ -43,12 +43,13 @@ def get_all_teams_information_from_league(league_id):
 
     url = TEAMS_PATH.format(league_id, LEAGUES[league_id], date.today().year - 1)
     all_seasons_from_leagues = get_all_seasons(url)
+    print(all_seasons_from_leagues)
 
     count = 0
     teams = []
     for season in all_seasons_from_leagues:
         count += 1
-        print(f"{count}/{len(all_seasons_from_leagues)} Seasons")
+        print(f"{count}/{len(all_seasons_from_leagues)} Seasons {season}")
         url = TEAMS_PATH.format(league_id, LEAGUES[league_id], season)
         teams += get_teams_from_seasons(url)
     teams = list(set(teams))

@@ -92,9 +92,8 @@ def get_all_games_information_from_league(league_id):
                         "Visiting Score"]
     return df_games
 
+
 def main():
-    #df_teams = get_all_games_information_from_leagues(LEAGUES)
-    #print(df_teams.head())
     df_teams = get_all_games_information_from_league(3)
     print(df_teams.head())
 
