@@ -7,7 +7,6 @@ import pandas as pd
 
 def get_league_urls():
     """ Returns a list of all league urls """
-    # TODO add euroleague as a standalone league
 
     source = requests.get('https://www.proballers.com/').text
     soup = BeautifulSoup(source, 'lxml')
@@ -25,9 +24,8 @@ def get_leagues_df(league_urls):
     """ Returns leagues table as a pandas` data frame with the columns: id, name, url
         input : list of league urls
         output: pandas data frame"""
-    # TODO add Country of league and continent (america, wnba, europe etc.)
 
-    leagues = pd.DataFrame(columns=['id', 'name', 'url'])
+    leagues = pd.DataFrame(columns = ['id', 'name', 'url'])
     for i in range(len(league_urls)):
         league = league_urls[i]
         league_name = league.split(r'/')[-1]
@@ -40,7 +38,7 @@ def get_leagues_df(league_urls):
 def main():
     league_urls = get_league_urls()
     leagues = get_leagues_df(league_urls)
-    print(leagues[['id', 'name']].sample(6))
+    print(leagues.sample(6))
 
 
 if __name__ == '__main__':
