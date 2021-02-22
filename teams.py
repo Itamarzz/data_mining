@@ -11,7 +11,7 @@ TEAM_PATH = ROOT+"/basketball/team/{}"
 
 
 def get_teams_from_seasons(league_id, season):
-    """ Esta funcion devuelve todos los equipos que participaron en la liga league_id en la temporada season.
+    """ This function returns all the teams that participated in the league league_id in the season season.
     """
     url = TEAMS_PATH.format(league_id, LEAGUES[league_id], season)
     response = requests.get(url)
@@ -33,7 +33,7 @@ def get_teams_from_seasons(league_id, season):
 
 
 def get_team_information(team_id):
-    """Esta funcion devuelve el nombre y el pais al cual pertenece el equipo team_id
+    """This function returns the name and the country to which the team team_id belongs
     """
     url = TEAM_PATH.format(team_id)
     response = requests.get(url)
@@ -55,8 +55,8 @@ def get_team_information(team_id):
 
 
 def get_all_teams_information_from_league(league_id):
-    """ Esta funcion devuelve un DataFrame con información de todos los equipos que han participado en la
-    liga league_id en cualquier temporada.
+    """ This function returns a DataFrame with information on all the teams that have participated in the
+    league league_id in any season.
     """
     url = TEAMS_PATH.format(league_id, LEAGUES[league_id], date.today().year - 1)
     all_seasons_from_leagues = get_all_seasons(url)
