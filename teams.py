@@ -10,8 +10,16 @@ TEAMS_PATH = ROOT+"/basketball/league/{}/{}/{}/teams"
 TEAM_PATH = ROOT+"/basketball/team/{}"
 
 
-def get_teams_from_seasons(url):
+def get_teams_from_seasons(league_id, season):
+    """ This function returns all the teams that participated in the league league_id in the season season.
+    """
+    url = TEAMS_PATH.format(league_id, LEAGUES[league_id], season)
     response = requests.get(url)
+
+    if response.status_code not in [500, 200]:
+        print(f"Unknown request error: {response.text}")
+        return
+
     while response.status_code == 500:
         print("Error 500. Trying Again...")
         response = requests.get(url)
@@ -24,8 +32,15 @@ def get_teams_from_seasons(url):
     return teams
 
 
-def get_team_information(url):
+def get_team_information(team_id):
+    """This function returns the name and the country to which the team team_id belongs
+    """
+    url = TEAM_PATH.format(team_id)
     response = requests.get(url)
+
+    if response.status_code not in [500, 200]:
+        print(f"Unknown request error: {response.text}")
+        return
 
     while response.status_code == 500:
         print("Error 500. Trying Again...")
@@ -40,27 +55,28 @@ def get_team_information(url):
 
 
 def get_all_teams_information_from_league(league_id):
-
+    """ This function returns a DataFrame with information on all the teams that have participated in the
+    league league_id in any season.
+    """
     url = TEAMS_PATH.format(league_id, LEAGUES[league_id], date.today().year - 1)
     all_seasons_from_leagues = get_all_seasons(url)
-    print(all_seasons_from_leagues)
 
-    count = 0
     teams = []
+    count, len_all_seasons_from_leagues = 0, len(all_seasons_from_leagues)
+    print("Get all teams per seasons...")
     for season in all_seasons_from_leagues:
         count += 1
-        print(f"{count}/{len(all_seasons_from_leagues)} Seasons {season}")
-        url = TEAMS_PATH.format(league_id, LEAGUES[league_id], season)
-        teams += get_teams_from_seasons(url)
+        print(f"{count}/{len_all_seasons_from_leagues} Season {season}...")
+        teams += get_teams_from_seasons(league_id, season)
     teams = list(set(teams))
 
-    count = 0
     all_teams_with_info = {}
-    for team in teams:
+    count, len_teams = 0, len(teams)
+    print("Get team information...")
+    for team_id in teams:
         count += 1
-        print(f"{count}/{len(teams)} Teams")
-        url = TEAM_PATH.format(team)
-        all_teams_with_info[team] = get_team_information(url) + [league_id]
+        print(f"{count}/{len_teams} Teams {team_id}...")
+        all_teams_with_info[team_id] = get_team_information(team_id) + [league_id]
 
     df_teams = pd.DataFrame.from_dict(all_teams_with_info, orient='index').reset_index()
     df_teams.columns = ["Id", "Name", "Country", "League"]
@@ -69,8 +85,22 @@ def get_all_teams_information_from_league(league_id):
 
 
 def main():
+    """ Test functions:
+
+    * get_teams_from_seasons()
+
+    * get_team_information()
+
+    * get_all_teams_information_from_league()
+    """
+    assert get_teams_from_seasons(3, 2020) == ['100', '101', '116', '825', '103', '104', '105', '106', '107', '108',
+                                               '109', '110', '111', '112', '127', '113', '114', '115', '102', '117',
+                                               '1827', '118', '119', '120', '121', '122', '123', '125', '126', '128']
+    assert get_team_information('100') == ['Atlanta Hawks', 'United States']
+    assert get_team_information('101') == ['Boston Celtics', 'United States']
     df_teams = get_all_teams_information_from_league(3)
     print(df_teams.head())
+    print('All tests passed!!')
 
 
 if __name__ == '__main__':

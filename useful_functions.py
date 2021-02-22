@@ -4,6 +4,11 @@ from bs4 import BeautifulSoup
 
 def get_all_seasons(url):
     response = requests.get(url)
+
+    if response.status_code not in [500, 200]:
+        print(f"Unknown request error: {response.text}")
+        return
+
     while response.status_code == 500:
         response = requests.get(url)
 
