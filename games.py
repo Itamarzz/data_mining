@@ -10,7 +10,10 @@ SCHEDULES_PATH = ROOT+"/basketball/league/{}/{}/{}/schedule"
 SCHEDULE_PATH = ROOT+"/basketball/game/{}"
 
 
-def get_pagination(url):
+def get_pagination(league_id, season):
+    """ Esta funcion retorna la cantidad de páginas que tiene sobre games la liga league_id en la temporada season
+    """
+    url = SCHEDULES_PATH.format(league_id, LEAGUES[league_id], season)
     response = requests.get(url)
     while response.status_code == 500:
         print("Error 500. Trying Again...")
@@ -23,7 +26,10 @@ def get_pagination(url):
     return int(max(pagination))
 
 
-def get_games_ids(url):
+def get_games_ids(league_id, season, page):
+    """ Esta funcion devuelve todos los games id de una liga para una temporada especifica dada una pagina
+    """
+    url = SCHEDULES_PATH.format(league_id, LEAGUES[league_id], season) + "/" + str(page)
     response = requests.get(url)
     while response.status_code == 500:
         print("Error 500. Trying Again...")
@@ -38,7 +44,10 @@ def get_games_ids(url):
     return games
 
 
-def get_game_information(url):
+def get_game_information(game_id):
+    """Esta funcion devuelve información sobre el game
+    """
+    url = SCHEDULE_PATH.format(game_id)
     response = requests.get(url)
     while response.status_code == 500:
         print("Error 500. Trying Again...")
@@ -59,33 +68,18 @@ def get_game_information(url):
     return [local_team, visit_team, match_date, status, local_score, visit_score]
 
 
-def get_all_games_information_from_league(league_id):
-    url = SCHEDULES_PATH.format(league_id, LEAGUES[league_id], date.today().year - 1)
-    all_seasons_from_leagues = get_all_seasons(url)
+def get_all_games_information_from_league_and_season(league_id, season):
+    all_games = []
+    print(f"Get all matches in league {league_id},{LEAGUES[league_id]} and season {season}")
+    for i in range(1, get_pagination(league_id, season)):
+        all_games += get_games_ids(league_id, season, i)
 
-    count = 0
-    all_games = {}
-    for season in all_seasons_from_leagues:
-        count += 1
-        print(f"{count}/{len(all_seasons_from_leagues)} Seasons")
-        url = SCHEDULES_PATH.format(league_id, LEAGUES[league_id], season)
-        games_aux = []
-        for i in range(1, get_pagination(url)):
-            url_pag = SCHEDULES_PATH.format(league_id, LEAGUES[league_id], season) + "/" + str(i)
-            games_aux += get_games_ids(url_pag)
-        all_games[season] = games_aux
-        break
-
-    count_season = 0
     all_games_with_info = {}
-    for season, games in all_games.items():
-        count_games = 0
-        count_season += 1
-        for game in games:
-            count_games += 1
-            print(f"Season {season} ({count_season}/{len(all_games.keys())}). Games ({count_games}/{len(games)})")
-            url = SCHEDULE_PATH.format(game)
-            all_games_with_info[game] = [league_id, season] + get_game_information(url)
+    count, len_all_games = 0, len(all_games)
+    for game_id in all_games:
+        count += 1
+        print(f"{count}/{len_all_games}. Game Id {game_id}...")
+        all_games_with_info[game_id] = [league_id, season] + get_game_information(game_id)
 
     df_games = pd.DataFrame.from_dict(all_games_with_info, orient='index').reset_index()
     df_games.columns = ["Id", "League", "Year", "Local Team", "Visiting Team", "Date", "Status", "Local Score",
@@ -94,8 +88,29 @@ def get_all_games_information_from_league(league_id):
 
 
 def main():
-    df_teams = get_all_games_information_from_league(3)
-    print(df_teams.head())
+    """ Test functions:
+
+    * get_pagination()
+
+    * get_games_ids()
+
+    * get_game_information()
+    """
+    assert get_pagination(3, 2020) == 8
+    assert get_games_ids(3, 2020, 3) == ['645322', '645323', '645324', '645326', '645327', '645328', '645329',
+                                         '645330', '645333', '645334', '645335', '645337', '645338', '645339',
+                                         '645340', '645341', '645342', '645343', '645345', '645346', '645347',
+                                         '645349', '645351', '645352', '645353', '645354', '645355', '645356',
+                                         '645357', '645358', '645360', '645361', '645363', '645365', '645366',
+                                         '645367', '645368', '645370', '645371', '645372', '645373', '645374',
+                                         '645375', '645376', '645377', '645378', '645379', '645381', '645382',
+                                         '645383', '645384', '645385', '645386', '645387', '645388', '645389',
+                                         '645391', '645392', '645393']
+    assert get_game_information(645322) == ['119', '113', 'Jan 13, 2021', 'Final', '137', '134']
+    assert get_game_information(645391) == ['114', '112', 'Jan 22, 2021', 'Final', '106', '113']
+    df_games = get_all_games_information_from_league_and_season(3, 2020)
+    print(df_games.head())
+    print('All tests passed!!')
 
 
 if __name__ == '__main__':
