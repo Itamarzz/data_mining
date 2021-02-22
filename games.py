@@ -55,7 +55,7 @@ def get_game_details(game_id):
 
 
 def get_games_from_league_and_season(league_id, season):
-    """ Returns a pandas data grame with all game results of a given league in a given season """
+    """ Returns a pandas data frame with all game results of a given league in a given season """
 
     game_ids = []
     print(f"Get all games in league {league_id},{LEAGUES[league_id]} from season {season}")
@@ -68,14 +68,18 @@ def get_games_from_league_and_season(league_id, season):
     for game_id in game_ids:
         count += 1
         print(f"{count}/{len_all_games}. Game Id {game_id}...")
-        games[game_id] = [league_id, season] + get_game_details(game_id)
+        games[game_id] = get_game_details(game_id)
 
     df_games = pd.DataFrame.from_dict(games, orient='index').reset_index()
-    df_games.columns = ["Id", "League", "Year", "Local Team", "Visiting Team", "Date", "Local Score",
+    df_games.columns = ["Id", "Local Team", "Visiting Team", "Date", "Local Score",
                         "Visiting Score"]
+    df_games["League"] = league_id
+    df_games["Year"] = season
+
     return df_games
 
-#----- Tests -----
+# ----- Tests -----
+
 
 def test_get_games():
     """ Test functions:
@@ -105,6 +109,7 @@ def test_get_games():
     print('All tests passed!!')
 # test_get_games()
 
+
 def main():
 
     LEAGUE_ID = 100028 # sample league_id
@@ -112,6 +117,7 @@ def main():
 
     df_games = get_games_from_league_and_season(LEAGUE_ID, SEASON)
     print(df_games.sample(5))
+
 
 if __name__ == '__main__':
     main()
