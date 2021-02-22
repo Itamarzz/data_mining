@@ -1,6 +1,4 @@
-import requests
 import pandas as pd
-from bs4 import BeautifulSoup
 from useful_functions import get_source
 
 ROOT = "https://www.proballers.com"
