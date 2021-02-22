@@ -13,6 +13,7 @@ SCHEDULE_PATH = ROOT+"/basketball/game/{}"
 def get_pagination(url):
     response = requests.get(url)
     while response.status_code == 500:
+        print("Error 500. Trying Again...")
         response = requests.get(url)
 
     soup = BeautifulSoup(response.text, 'lxml')
@@ -25,6 +26,7 @@ def get_pagination(url):
 def get_games_ids(url):
     response = requests.get(url)
     while response.status_code == 500:
+        print("Error 500. Trying Again...")
         response = requests.get(url)
 
     soup = BeautifulSoup(response.text, 'lxml')
@@ -39,6 +41,7 @@ def get_games_ids(url):
 def get_game_information(url):
     response = requests.get(url)
     while response.status_code == 500:
+        print("Error 500. Trying Again...")
         response = requests.get(url)
 
     soup = BeautifulSoup(response.text, 'lxml')
@@ -56,38 +59,43 @@ def get_game_information(url):
     return [local_team, visit_team, match_date, status, local_score, visit_score]
 
 
-def get_all_games_information_from_leagues(leagues_dict):
-    all_seasons_from_leagues = {}
-    for league_id, name in leagues_dict.items():
-        url = SCHEDULES_PATH.format(league_id, name, date.today().year - 1)
-        all_seasons_from_leagues[league_id] = get_all_seasons(url)
+def get_all_games_information_from_league(league_id):
+    url = SCHEDULES_PATH.format(league_id, LEAGUES[league_id], date.today().year - 1)
+    all_seasons_from_leagues = get_all_seasons(url)
 
+    count = 0
     all_games = {}
-    for league, seasons in all_seasons_from_leagues.items():
-        all_games[league] = {}
-        for season in seasons:
-            games_aux = []
-            url = SCHEDULES_PATH.format(league, LEAGUES[league], season)
-            for i in range(1, get_pagination(url)):
-                url_pag = SCHEDULES_PATH.format(league, LEAGUES[league], season) + "/" + str(i)
-                games_aux += get_games_ids(url_pag)
-            all_games[league][season] = games_aux
+    for season in all_seasons_from_leagues:
+        count += 1
+        print(f"{count}/{len(all_seasons_from_leagues)} Seasons")
+        url = SCHEDULES_PATH.format(league_id, LEAGUES[league_id], season)
+        games_aux = []
+        for i in range(1, get_pagination(url)):
+            url_pag = SCHEDULES_PATH.format(league_id, LEAGUES[league_id], season) + "/" + str(i)
+            games_aux += get_games_ids(url_pag)
+        all_games[season] = games_aux
+        break
 
+    count_season = 0
     all_games_with_info = {}
-    for league, seasons in all_games.items():
-        for year, games in seasons.items():
-            for game in games:
-                url = SCHEDULE_PATH.format(game)
-                all_games_with_info[game] = [league, year] + get_game_information(url)
+    for season, games in all_games.items():
+        count_games = 0
+        count_season += 1
+        for game in games:
+            count_games += 1
+            print(f"Season {season} ({count_season}/{len(all_games.keys())}). Games ({count_games}/{len(games)})")
+            url = SCHEDULE_PATH.format(game)
+            all_games_with_info[game] = [league_id, season] + get_game_information(url)
 
     df_games = pd.DataFrame.from_dict(all_games_with_info, orient='index').reset_index()
     df_games.columns = ["Id", "League", "Year", "Local Team", "Visiting Team", "Date", "Status", "Local Score",
                         "Visiting Score"]
     return df_games
 
-
 def main():
-    df_teams = get_all_games_information_from_leagues(LEAGUES)
+    #df_teams = get_all_games_information_from_leagues(LEAGUES)
+    #print(df_teams.head())
+    df_teams = get_all_games_information_from_league(3)
     print(df_teams.head())
 
 

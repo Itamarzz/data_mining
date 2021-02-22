@@ -13,6 +13,7 @@ TEAM_PATH = ROOT+"/basketball/team/{}"
 def get_teams_from_seasons(url):
     response = requests.get(url)
     while response.status_code == 500:
+        print("Error 500. Trying Again...")
         response = requests.get(url)
 
     soup = BeautifulSoup(response.text, 'lxml')
@@ -27,6 +28,7 @@ def get_team_information(url):
     response = requests.get(url)
 
     while response.status_code == 500:
+        print("Error 500. Trying Again...")
         response = requests.get(url)
 
     soup = BeautifulSoup(response.text, 'lxml')
@@ -37,33 +39,36 @@ def get_team_information(url):
     return [team_name, team_country]
 
 
-def get_all_teams_information_from_leagues(leagues_dict):
-    all_seasons_from_leagues = {}
-    for league_id, name in leagues_dict.items():
-        url = TEAMS_PATH.format(league_id, name, date.today().year - 1)
-        all_seasons_from_leagues[league_id] = get_all_seasons(url)
+def get_all_teams_information_from_league(league_id):
 
-    all_team_from_leagues = {}
-    for league, seasons in all_seasons_from_leagues.items():
-        teams_aux = []
-        for season in seasons:
-            url = TEAMS_PATH.format(league, leagues_dict[league], season)
-            teams_aux += get_teams_from_seasons(url)
-        all_team_from_leagues[league] = list(set(teams_aux))
+    url = TEAMS_PATH.format(league_id, LEAGUES[league_id], date.today().year - 1)
+    all_seasons_from_leagues = get_all_seasons(url)
 
+    count = 0
+    teams = []
+    for season in all_seasons_from_leagues:
+        count += 1
+        print(f"{count}/{len(all_seasons_from_leagues)} Seasons")
+        url = TEAMS_PATH.format(league_id, LEAGUES[league_id], season)
+        teams += get_teams_from_seasons(url)
+    teams = list(set(teams))
+
+    count = 0
     all_teams_with_info = {}
-    for league, teams in all_team_from_leagues.items():
-        for team in teams:
-            url = TEAM_PATH.format(team)
-            all_teams_with_info[team] = get_team_information(url) + [league]
+    for team in teams:
+        count += 1
+        print(f"{count}/{len(teams)} Teams")
+        url = TEAM_PATH.format(team)
+        all_teams_with_info[team] = get_team_information(url) + [league_id]
 
     df_teams = pd.DataFrame.from_dict(all_teams_with_info, orient='index').reset_index()
     df_teams.columns = ["Id", "Name", "Country", "League"]
+
     return df_teams
 
 
 def main():
-    df_teams = get_all_teams_information_from_leagues(LEAGUES)
+    df_teams = get_all_teams_information_from_league(3)
     print(df_teams.head())
 
 
