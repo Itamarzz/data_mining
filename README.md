@@ -3,7 +3,7 @@
 
 This project is a tool for scraping the Proballers website.
 
-**Background:**
+**Background:** <br>
 The Proballers website offers a worldwide data, updates and insights on basketball.
 It gives the user access to a lot of stas, players profiles, team rosters, league scores and standings
 both from the past and the most recent gaems.
@@ -50,6 +50,32 @@ main challenge:
   almost for each data point the user need to navigate through: continent --> league --> season --> page and so on..
   we solved it by creating the usful_function module which with combination with the league module and team module give
   us the ability to nevigate through the all website easily!
-  
+ 
+ ### Database
+**Database overview:**<br>
+This database has been created with the idea that the main use of the data will be focusing on player performance and the impact on his team. Secondary use will be analyzing player performances raltive to themselves and in different leagues and stage of career.
+
+**Tables**:
+- _players_, player basic info such as: name, height, position, date of birth with player number as primary key
+- _teams_, stores team basic info (team number, name, country) with team number as primary key.
+- _leagues_, stores information on the league with leagur number as primary key.
+- _games_, to store game information (league, season, date) with game number as a primary key.
+- _**team_games**_, stores team games with its score, weather it was a win and if the team played at home. 
+- _**player_stats**_, stores player stats per game (shoots taken, shoot made, rebounds, steals etc.).
+
+comment: some tables are small and could be merged with others but we decided to keep them in order to allow scalability.
+
+**Relationships between tables:**
+- player_stats and team games, by team_game_id as FK. in order to be able to analyze player performance in contex of his team games (in different seasons and leagues).
+- player_stats and players, by player_no as FK.
+- team_games and games, by game_no as FK. allows to analyse teams (and player) performace in different seasons, leagues and game details.
+- team_games and teams, on team_no as FK.
+- games and leagues, on league_no as FK.
+-league_season table is not linked for the use of db maintainace and retrieve list of avaiable leagues to scrap.
+
+* please see full DB diagram in project folder
+* field details in different
+
+
 Roy & Itamar
   
