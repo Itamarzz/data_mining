@@ -1,6 +1,7 @@
 import re
 import config.scrapr_config as cfg
-from useful_functions import get_source
+import config.database_config as dbcfg
+from useful_functions import get_source, insert_rows, progress_bar, remove_existing_keys
 
 PLAYER_PROFILE_CLASS = "home-player__card-identity__profil__card"
 PLAYER_INFO_CLASS = 'home-player__card-identity__profil__card__infos__entry'
@@ -38,15 +39,16 @@ def get_player_info_dict(lst_of_ids):
         url = cfg.PLAYER_PATH.format(player_id)
         soup = get_source(url)
 
+        if not soup:
+            continue
+
         player_info = get_player_details(soup)
-        player_info_dict[player_id] = {"player_on": player_id,
+        player_info_dict[player_id] = {"player_no": player_id,
                                        "name": player_info["name"],
                                        "date_of_birth": player_info["Date of birth"],
                                        "height": player_info["Height"],
                                        "position": player_info["Position"],
                                        "nationality": player_info["Nationality"]}
-
-        player_info_dict[player_id]['player_on'] = player_id
 
     return player_info_dict
 
@@ -60,3 +62,32 @@ def get_height_in_meters(height):
 
     return float(height_meters)
 
+
+def save_teams(players_id, connection):
+    if not cfg.SILENT_MODE:
+        print("Save players...")
+
+    players_id = remove_existing_keys(dbcfg.TEAMS_TABLE_NAME, players_id)
+    print(players_id)
+    players_details = get_player_info_dict(players_id)
+    if len(players_id) > 0:
+        players_id
+        if not cfg.SILENT_MODE:
+            print("Get players details list passed!")
+
+        data_type = {
+            'player_no': 'int',
+            'name': 'str',
+            'date_of_birth': 'date',
+            'height': 'float',
+            'position': 'str',
+            'nationality': 'str'
+        }
+        insert_rows(players_details, dbcfg.PLAYERS_TABLE_NAME, connection, data_types=data_type)
+        print("Insert players rows passed!")
+
+    else:
+        if not cfg.SILENT_MODE:
+            print("Not news players")
+        else:
+            pass

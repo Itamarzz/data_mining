@@ -1,3 +1,9 @@
+#Connection:
+USERNAME = 'example_user'
+PASSWORD = 'example_password'
+HOST = 'localhost'
+DATABASE_NAME = 'proballers'
+
 #Tables
 LEAGUE_TABLE = "CREATE TABLE leagues (\
               league_no int PRIMARY KEY,\
@@ -73,10 +79,11 @@ PLAYER_STATS_TEAM_GAMES_REF = "ALTER TABLE player_stats ADD FOREIGN KEY (team_ga
 PLAYER_STATS_PLAYERS_REF = "ALTER TABLE player_stats ADD FOREIGN KEY (player_no) REFERENCES `players` (player_no)"
 
 #Database
-DATABASE_NAME = 'proballers'
 CREATE_DATABASE = f"CREATE DATABASE {DATABASE_NAME}"
 CREATE_REF = [GAMES_LEAGUE_REF, TEAM_GAMES_GAMES_REF, TEAM_GAMES_TEAMS_REF, PLAYER_STATS_TEAM_GAMES_REF, PLAYER_STATS_PLAYERS_REF]
 CREATE_TABLES = [LEAGUE_TABLE, PLAYER_TABLE, TEAMS_TABLE, LEAGUE_SEASONS, GAMES_TABLE, TEAM_GAMES_TABLE, PLAYER_STATS_TABLE]
+TABLE_KEYS = {'leagues': 'league_no', 'players': 'player_no', 'teams': 'team_no', 'league_seasons': 'idx',
+              'games': 'game_no', 'team_games': 'team_game_id', 'player_stats': 'idx'}
 
 #Tables
 LEAGUES_TABLE_NAME = 'leagues'
@@ -86,8 +93,3 @@ LEAGUE_SEASONS_TABLE_NAME = 'league_seasons'
 GAMES_TABLE_NAME = 'games'
 TEAM_GAMES_TABLE_NAME = 'team_games'
 PLAYER_STATS_TABLE_NAME = 'player_stats'
-
-#Connection:
-USERNAME = 'example_user'
-PASSWORD = 'example_password'
-HOST = 'localhost'

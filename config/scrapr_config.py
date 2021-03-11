@@ -1,5 +1,6 @@
 PATH_ROOT = "https://www.proballers.com"
-MAX_RETRIES = 2
+MAX_RETRIES = 1  # TODO: change to 5
+SILENT_MODE = False
 
 #Leagues Config
 URL_ALL_LEAGUES = "https://www.proballers.com/page/7-leagues-we-cover"

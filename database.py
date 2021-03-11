@@ -10,7 +10,6 @@ def connect_sql(host=dbc.HOST, user=dbc.USERNAME, password=dbc.PASSWORD):
 
     try:
         con = pymysql.connect(host=host, user=user, password=password)
-        print('connection was created successfully')
         return con
     except Exception:
         print("couldn't connect pymysql. please verify that host, username and password are all correct and try again")
@@ -58,8 +57,6 @@ def sql_query(sql_string, con):
 def create_db():
     """ creating mysql database with given list of tables and references
     """
-    print('for creating Proballers database. please provide credentials to connect to mysql')
-    #user, password = get_sql_cred()
     con = connect_sql()
     execute_sql(dbc.CREATE_DATABASE, con)
     print('database was created successfully')
@@ -69,11 +66,6 @@ def create_db():
         execute_sql(table, con)
 
     print('\nall tables were created successfully')
-
-    for ref in dbc.CREATE_REF:
-        execute_sql(ref, con)
-
-    print('\nall references were created successfully')
 
 
 def main():

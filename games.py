@@ -1,7 +1,7 @@
 import config.scrapr_config as cfg
 import config.database_config as dbcfg
 import players
-from useful_functions import get_source, insert_rows
+from useful_functions import get_source, insert_rows, progress_bar, remove_existing_keys
 
 
 def get_pagination(league_id, league_name, season):
@@ -9,6 +9,9 @@ def get_pagination(league_id, league_name, season):
     """
     url = cfg.GAMES_PATH.format(league_id, league_name, season)
     soup = get_source(url)
+
+    if soup is None:
+        raise TypeError("The website is not responing in this moment.")  # TODO: corregir texto
 
     pagination = soup.find_all("a", {"class": cfg.SEARCH_PAGINATION_BY_CLASS})[-1].get_text()
     return int(pagination)
@@ -19,6 +22,9 @@ def get_game_ids(league_id, league_name, season, page):
     """
     url = cfg.GAMES_PATH.format(league_id, league_name, season) + "/" + str(page)
     soup = get_source(url)
+
+    if soup is None:
+        raise TypeError("The website is not responing in this moment.")  # TODO: corregir texto
 
     games = []
     for div in soup.find_all("div", class_=cfg.SEARCH_GAMES_IDS_BY_CLASS):
@@ -34,6 +40,9 @@ def get_game_details(game_id):
     """
     url = cfg.GAME_PATH.format(game_id)
     soup = get_source(url)
+
+    if not soup:
+        return None
 
     teams = []
     for team in soup.find_all('a', class_=cfg.SEARCH_GAME_TEAMS_BY_CLASS):
@@ -72,7 +81,7 @@ def get_game_details(game_id):
             for delete_row in delete_rows:
                 del table_rows[delete_row]
 
-            table_rows["player_id"] = player_id
+            table_rows["player_id"] = int(player_id)
             table_rows["team_game_id"] = team_game_id
             player_stats.append(table_rows)
 
@@ -92,32 +101,54 @@ def get_game_details(game_id):
 
 
 def save_games(league_id, league_name, season, connection, player_stats):
+    if not cfg.SILENT_MODE:
+        print("Save games...")
 
     game_ids = []
     num_of_pages = get_pagination(league_id, league_name, season)
     for i in range(1, num_of_pages):
         game_ids += get_game_ids(league_id, league_name, season, i)
+    game_ids = remove_existing_keys(dbcfg.TEAMS_TABLE_NAME, game_ids)
 
-    games = {}
-    teams_games = {}
-    player_stats_games = []
-    for game_id in game_ids:
-        games_info, teams_game, player_stats = get_game_details(game_id)
-        games[game_id] = games_info
-        games[game_id]['league_id'] = league_id
-        games[game_id]['season'] = season
-        teams_games.update(teams_game)
-        player_stats_games += player_stats
+    if not cfg.SILENT_MODE:
+        print("Get games list passed!")
 
-    players_list = list(set([player_stat['player_id'] for player_stat in player_stats_games]))
-    players_details = players.get_player_info_dict(players_list)
+    if len(game_ids) > 0:
+        games = {}
+        teams_games = {}
+        player_stats_games = []
+        len_games = len(game_ids)
+        for index, game_id in enumerate(game_ids):
+            result = get_game_details(game_id)
+            if not result:
+                continue
 
-    insert_rows(players_details, dbcfg.PLAYERS_TABLE_NAME, connection)
-    insert_rows(games, dbcfg.GAMES_TABLE_NAME, connection)
-    insert_rows(teams_games, dbcfg.TEAM_GAMES_TABLE_NAME, connection)
+            games_info, teams_game, player_stats = result
+            games[game_id] = games_info
+            games[game_id]['league'] = league_id
+            games[game_id]['season'] = season
+            teams_games.update(teams_game)
+            player_stats_games += player_stats
 
-    if player_stats:
-        insert_rows(player_stats, dbcfg.PLAYER_STATS_TABLE_NAME, connection)
+            if not cfg.SILENT_MODE:
+                progress_bar(index+1, len_games, "Get games details")
+            break
+        if not cfg.SILENT_MODE:
+            print("\nGet games details list passed!")
+
+        players_list = list(set([player_stat['player_id'] for player_stat in player_stats_games]))
+        players.save_teams(players_list, connection)
+
+        insert_rows(games, dbcfg.GAMES_TABLE_NAME, connection)
+        insert_rows(teams_games, dbcfg.TEAM_GAMES_TABLE_NAME, connection)
+
+        #if player_stats:
+            #insert_rows(player_stats, dbcfg.PLAYER_STATS_TABLE_NAME, connection)
+    else:
+        if not cfg.SILENT_MODE:
+            print("Not news games")
+        else:
+            pass
 
 
 # ----- Tests -----

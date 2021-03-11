@@ -1,6 +1,7 @@
 import sys
 import leagues as lg
 import useful_functions as uf
+import config.scrapr_config as cfg
 import config.database_config as dbcfg
 import argparse
 
@@ -77,14 +78,13 @@ def main():
 
         league_id, league_name = get_and_validate_league(league)
         validate_season(league_id, league_name, season)
-        print("Validation Pass!")
+        if not cfg.SILENT_MODE:
+            print("Validation Passed!")
 
         connection = create_engine(f'mysql+pymysql://{dbcfg.USERNAME}:{dbcfg.PASSWORD}@{dbcfg.HOST}/{dbcfg.DATABASE_NAME}')
 
         save_teams(league_id, league_name, season, connection)
-        print("Save Teams!")
         save_games(league_id, league_name, season, connection, player_stats)
-        print("Save Games!")
 
     except Exception as ex:
         print(f'ERROR: Invalid input: {ex}\nFor proper usage:\n{HELP_STRING}', )
