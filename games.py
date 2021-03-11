@@ -1,35 +1,29 @@
 import pandas as pd
+import config.scrapr_config as CFG
 from useful_functions import get_source
 
-ROOT = "https://www.proballers.com"
-LEAGUES = {3: 'nba', 100028: 'basketball-champions-league-americas'}
-SCHEDULE_PATH = ROOT + "/basketball/league/{}/{}/{}/schedule"
-GAME_PATH = ROOT + "/basketball/game/{}"
 
-
-def get_pagination(league_id, season):
+def get_pagination(league_id, league_name, season):
     """ Returns the number of game pages that exist for a league in a specific season
     """
-    url = SCHEDULE_PATH.format(league_id, LEAGUES[league_id], season)
+    url = CFG.GAMES_PATH.format(league_id, league_name, season)
     soup = get_source(url)
 
-    pagination = []
-    for div in soup.find_all("a", {"class": "pagination-link"}):
-        pagination.append(int(div.get_text()))
-    return int(max(pagination))
+    pagination = soup.find_all("a", {"class": CFG.SEARCH_PAGINATION_BY_CLASS})[-1].get_text()
+    return int(pagination)
 
 
-def get_game_ids(league_id, season, page):
+def get_game_ids(league_id, league_name, season, page):
     """ Returns a list with all game IDs from a league, season and page number
     """
-    url = SCHEDULE_PATH.format(league_id, LEAGUES[league_id], season) + "/" + str(page)
+    url = CFG.GAMES_PATH.format(league_id, league_name, season) + "/" + str(page)
     soup = get_source(url)
 
     games = []
-    for div in soup.find_all("div", {"class": "home-league__schedule__content__tables__content"}):
+    for div in soup.find_all("div", {"class": CFG.SEARCH_GAMES_IDS_BY_CLASS}):
         for link in div.select("a"):
-            if 'game' in link['href']:
-                games.append(link['href'].split("/")[3])
+            if CFG.GAME_NAME in link['href']:
+                games.append(link['href'].split("/")[CFG.ID_GAME_INDEX])
     return games
 
 
@@ -37,47 +31,103 @@ def get_game_details(game_id):
     """ returns a list with details (local_team, visit_team, match_date, local_score, visit_score)
         for a given game.
     """
-    url = GAME_PATH.format(game_id)
+    url = CFG.GAME_PATH.format(game_id)
     soup = get_source(url)
 
     teams = []
-    for team in soup.find_all('a', class_="home-game__content__result__final-score__team__picture"):
+    for team in soup.find_all('a', class_=CFG.SEARCH_GAME_TEAMS_BY_CLASS):
         teams.append(team['href'].split("/")[3])
     local_team, visit_team = teams
 
     span_info = []
-    for div in soup.select('div.home-game__content__result__final-score__score'):
+    for div in soup.find_all("div", {"class": CFG.SEARCH_GAME_RESULT_BY_CLASS}):
         for span in div.select('span'):
             span_info.append(span.get_text())
-    match_date, results, status = span_info
-    local_score, visit_score = results.split(" - ")
-    return [local_team, visit_team, match_date, local_score, visit_score]
+
+    match_date, teams, status = span_info
+    local_score, visit_score = teams.split(" - ")
+
+    headers_team_stats = ["MIN", "2M-2A", "3M-3A", "FG%", "1M-1A", "1%", "Or",
+                          "Dr", "Reb", "Ast", "Stl", "Blk", "Fo", "Pts", "Ef"]
+    player_stats, count = {}, 0
+    for table_team in ["1", "2"]:
+        if table_team == "1":
+            team_game_id = game_id+'l'
+        else:
+            team_game_id = game_id + 'v'
+
+        for tr in soup.find("div", class_="home-game__content__team-stats__content-team-"+table_team).select('tbody tr'):
+            player_id = tr.select("td a")[0]['href'].split("/")[3]
+            stats = []
+            for td in tr.find_all("td", class_="right"):
+                stats.append(td.get_text())
+            table_rows = dict(zip(headers_team_stats, stats))
+            table_rows["player_id"] = player_id
+            table_rows["team_game_id"] = team_game_id
+            player_stats[count] = table_rows
+            count += 1
+
+    game_info = {'game_date': match_date}
+    team_games = {game_id+'l': {'game_no': game_id,
+                                'team_no': local_team,
+                                'score': local_score,
+                                'win': local_score > visit_score,
+                                'home': True},
+                  game_id+'v': {'game_no': game_id,
+                                'team_no': visit_team,
+                                'score': visit_score,
+                                'win': visit_score > local_score,
+                                'home': False}}
+
+    return game_info, team_games, player_stats
 
 
-def get_games_from_league_and_season(league_id, season):
-    """ Returns a pandas data frame with all game results of a given league in a given season """
+# def get_games_from_league_and_season(league_id, league_name, season):
+#     """ Returns a pandas data frame with all game results of a given league in a given season """
+#
+#     game_ids = []
+#     print(f"Get all games in league {league_id},{league_name} from season {season}")
+#     num_of_pages = get_pagination(league_id, season)
+#     for i in range(1, num_of_pages):
+#         game_ids += get_game_ids(league_id, season, i)
+#
+#     games = {}
+#     count, len_all_games = 0, len(game_ids)
+#     for game_id in game_ids:
+#         count += 1
+#         print(f"{count}/{len_all_games}. Game Id {game_id}...")
+#         games[game_id] = get_game_details(game_id)
+#
+#     df_games = pd.DataFrame.from_dict(games, orient='index').reset_index()
+#     df_games.columns = ["Id", "Local Team", "Visiting Team", "Date", "Local Score",
+#                         "Visiting Score"]
+#     df_games["League"] = league_id
+#     df_games["Year"] = season
+#
+#     return df_games
+
+
+def save_games(league_id, league_name, season):
 
     game_ids = []
-    print(f"Get all games in league {league_id},{LEAGUES[league_id]} from season {season}")
-    num_of_pages = get_pagination(league_id, season)
+    num_of_pages = get_pagination(league_id, league_name, season)
     for i in range(1, num_of_pages):
-        game_ids += get_game_ids(league_id, season, i)
+        game_ids += get_game_ids(league_id, league_name, season, i)
 
     games = {}
-    count, len_all_games = 0, len(game_ids)
+    teams_games = {}
     for game_id in game_ids:
-        count += 1
-        print(f"{count}/{len_all_games}. Game Id {game_id}...")
-        games[game_id] = get_game_details(game_id)
+        games_info, teams_game, player_stats = get_game_details(game_id)
+        games[game_id] = games_info
+        games[game_id]['league_id'] = league_id
+        games[game_id]['season'] = season
 
-    df_games = pd.DataFrame.from_dict(games, orient='index').reset_index()
-    df_games.columns = ["Id", "Local Team", "Visiting Team", "Date", "Local Score",
-                        "Visiting Score"]
-    df_games["League"] = league_id
-    df_games["Year"] = season
+        teams_games.update(teams_game)
+        break
 
-    return df_games
-
+    print(teams_games)
+    print(games)
+    print(player_stats)
 # ----- Tests -----
 
 
@@ -90,9 +140,9 @@ def test_get_games():
 
     * get_game_information()
     """
-    assert get_pagination(3, 2020) == 8
+    assert get_pagination("3", "nba", 2020) == 11
 
-    assert get_game_ids(3, 2020, 3) == ['645322', '645323', '645324', '645326', '645327', '645328', '645329',
+    assert get_game_ids("3", "nba", 2020, 3) == ['645322', '645323', '645324', '645326', '645327', '645328', '645329',
                                          '645330', '645333', '645334', '645335', '645337', '645338', '645339',
                                          '645340', '645341', '645342', '645343', '645345', '645346', '645347',
                                          '645349', '645351', '645352', '645353', '645354', '645355', '645356',
@@ -107,17 +157,4 @@ def test_get_games():
     assert get_game_details(645391) == ['114', '112', 'Jan 22, 2021', '106', '113']
 
     print('All tests passed!!')
-# test_get_games()
-
-
-def main():
-
-    LEAGUE_ID = 100028 # sample league_id
-    SEASON = 2019
-
-    df_games = get_games_from_league_and_season(LEAGUE_ID, SEASON)
-    print(df_games.sample(5))
-
-
-if __name__ == '__main__':
-    main()
+#test_get_games()
