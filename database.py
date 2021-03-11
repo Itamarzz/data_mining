@@ -3,6 +3,7 @@ import pandas as pd
 import database_config as dbc
 import sys
 
+
 def connect_sql(host = dbc.HOST, user = dbc.USERNAME, password = dbc.PASSWORD):
     """ connect pymysql
     """
@@ -52,10 +53,11 @@ def get_sql_cred():
 
     return USERNAME, PASSWORD
 
+
 def create_db():
     """ creating mysql database with given list of tables and references
     """
-
+    print('for creating Proballers database. please provide credentials to connect to mysql')
     user, password = get_sql_cred()
     con = connect_sql(user = user, password=password)
     execute_sql(dbc.CREATE_DATABASE, con)
@@ -73,7 +75,15 @@ def create_db():
     print('\nall references were created successfully')
 
 
+def main():
+    create_db()
+
+
+if __name__ == main():
+    main()
+
 ########### TESTS ##########################
+
 # create_db()
 # con = connect_sql(dbc.HOST, dbc.USERNAME, dbc.PASSWORD)
 
