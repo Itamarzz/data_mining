@@ -1,4 +1,5 @@
 PATH_ROOT = "https://www.proballers.com"
+MAX_RETRIES = 2
 
 #Leagues Config
 URL_ALL_LEAGUES = "https://www.proballers.com/page/7-leagues-we-cover"
@@ -24,4 +25,8 @@ SEARCH_GAME_TEAMS_BY_CLASS = "home-game__content__result__final-score__team__pic
 SEARCH_GAME_RESULT_BY_CLASS = "home-game__content__result__final-score__score"
 GAME_NAME = 'game'
 ID_GAME_INDEX = 3
+
+#Players Config
+PLAYER_PATH = PATH_ROOT + '/basketball/player/{}'
+
 

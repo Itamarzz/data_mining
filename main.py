@@ -1,6 +1,10 @@
 import sys
 import leagues as lg
 import useful_functions as uf
+import config.database_config as dbcfg
+import argparse
+
+from sqlalchemy import create_engine
 from teams import save_teams
 from games import save_games
 
@@ -11,15 +15,13 @@ Example Usage: main.py nba 2020
     
 It is also possible to select the league by identifier --> main.py 442 2020
 
-Available Options:
+Available Options (Use options before positional arguments):
 --player_stats: Include game player stats
 
 Help Options:
---leagues_list: Show league list
-Example Usage: main.py --help --leagues_list
+leagues_list: Show league list
+Example Usage: main.py --help leagues_list
 """
-
-# --help --leagues_list
 
 NUM_ARGS_NO_ARGS = 1
 
@@ -48,11 +50,18 @@ def validate_season(league_id, league_name, season):
 
 
 def main():
+    # parser = argparse.ArgumentParser(description='Process some integers.')
+    # parser.add_argument('leagues')
+    # parser.add_argument('seasons')
+    #
+    # args = parser.parse_args()
+    # print(args.accumulate(args.integers))
+
     if len(sys.argv) == NUM_ARGS_NO_ARGS:
         print(HELP_STRING)
         return
     elif sys.argv[1] == '--help':
-        if '--leagues_list' in sys.argv:
+        if 'leagues_list' in sys.argv:
             leagues_list = lg.get_leagues()
             for k, v in leagues_list.items():
                 print(f"{k}, {v}")
@@ -64,16 +73,18 @@ def main():
     try:
         season = sys.argv[-1]
         league = sys.argv[-2]
+        player_stats = "player_stats" in sys.argv
 
         league_id, league_name = get_and_validate_league(league)
         validate_season(league_id, league_name, season)
         print("Validation Pass!")
 
-        save_teams(league_id, league_name, season)
-        print("Teams Ready!")
-        #save_games(league_id, league_name, season)
-        print("Games Ready!")
+        connection = create_engine(f'mysql+pymysql://{dbcfg.USERNAME}:{dbcfg.PASSWORD}@{dbcfg.HOST}/{dbcfg.DATABASE_NAME}')
 
+        save_teams(league_id, league_name, season, connection)
+        print("Save Teams!")
+        save_games(league_id, league_name, season, connection, player_stats)
+        print("Save Games!")
 
     except Exception as ex:
         print(f'ERROR: Invalid input: {ex}\nFor proper usage:\n{HELP_STRING}', )
