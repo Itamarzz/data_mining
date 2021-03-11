@@ -1,15 +1,15 @@
 import pymysql
 import pandas as pd
-import database_config as dbc
+import config.database_config as dbc
 import sys
 
 
-def connect_sql(host = dbc.HOST, user = dbc.USERNAME, password = dbc.PASSWORD):
+def connect_sql(host=dbc.HOST, user=dbc.USERNAME, password=dbc.PASSWORD):
     """ connect pymysql
     """
+
     try:
-        con = pymysql.connect(host = host, user = user, password = password)
-        print('connection was created successfully')
+        con = pymysql.connect(host=host, user=user, password=password)
         return con
     except Exception:
         print("couldn't connect pymysql. please verify that host, username and password are all correct and try again")
@@ -47,19 +47,17 @@ def sql_query(sql_string, con):
     return df
 
 
-def get_sql_cred():
-    USERNAME = input('please enter user:')
-    PASSWORD = input('Password:')
-
-    return USERNAME, PASSWORD
+# def get_sql_cred():
+#     USERNAME = input('please enter user:')
+#     PASSWORD = input('Password:')
+#
+#     return USERNAME, PASSWORD
 
 
 def create_db():
     """ creating mysql database with given list of tables and references
     """
-    print('for creating Proballers database. please provide credentials to connect to mysql')
-    user, password = get_sql_cred()
-    con = connect_sql(user = user, password=password)
+    con = connect_sql()
     execute_sql(dbc.CREATE_DATABASE, con)
     print('database was created successfully')
     execute_sql("USE proballers", con)
@@ -69,17 +67,12 @@ def create_db():
 
     print('\nall tables were created successfully')
 
-    for ref in dbc.CREATE_REF:
-        execute_sql(ref, con)
-
-    print('\nall references were created successfully')
-
 
 def main():
     create_db()
 
 
-if __name__ == main():
+if __name__ == '__main__':
     main()
 
 ########### TESTS ##########################

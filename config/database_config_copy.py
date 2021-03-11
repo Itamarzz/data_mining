@@ -1,8 +1,10 @@
-# import database as db
-import pandas as pd
+#Connection:
+USERNAME = 'example_user'
+PASSWORD = 'example_password'
+HOST = 'localhost'
+DATABASE_NAME = 'proballers'
 
-### Tables :
-
+#Tables
 LEAGUE_TABLE = "CREATE TABLE leagues (\
               league_no int PRIMARY KEY,\
               name varchar(30),\
@@ -52,53 +54,42 @@ PLAYER_STATS_TABLE = "CREATE TABLE player_stats (\
                       team_game_id varchar(20),\
                       player_no int,\
                       minuets int,\
-                      2M int,\
-                      2A int,\
-                      3M int,\
-                      3A int,\
-                      1M int,\
-                      1A int,\
-                      O_r int,\
-                      Dr int,\
-                      Ast int,\
-                      Stl int,\
-                      Blk int,\
+                      2m int,\
+                      2a int,\
+                      3m int,\
+                      3a int,\
+                      1m int,\
+                      1a int,\
+                      o_r int,\
+                      dr int,\
+                      ast int,\
+                      stl int,\
+                      blk int,\
                       fo int,\
-                      Pts int,\
-                      Eff int\
+                      pts int,\
+                      eff int\
                       )"
 
 
-# Tables references:
-
+#Tables references
 GAMES_LEAGUE_REF = "ALTER TABLE games ADD FOREIGN KEY (league) REFERENCES leagues (league_no)"
-
 TEAM_GAMES_GAMES_REF = "ALTER TABLE team_games ADD FOREIGN KEY (game_no) REFERENCES games (game_no)"
-
 TEAM_GAMES_TEAMS_REF = "ALTER TABLE team_games ADD FOREIGN KEY (team_no) REFERENCES teams (team_no)"
-
 PLAYER_STATS_TEAM_GAMES_REF = "ALTER TABLE player_stats ADD FOREIGN KEY (team_game_id) REFERENCES team_games (team_game_id)"
-
 PLAYER_STATS_PLAYERS_REF = "ALTER TABLE player_stats ADD FOREIGN KEY (player_no) REFERENCES `players` (player_no)"
 
-# REF_LEGEUE_SEASON_LEAGUES= "ALTER TABLE league_seasons ADD FOREIGN KEY (league_no) REFERENCES leagues (league_no)"
-
-
-### database:
-
-DATABASE_NAME = 'proballers'
-
+#Database
 CREATE_DATABASE = f"CREATE DATABASE {DATABASE_NAME}"
-
-
 CREATE_REF = [GAMES_LEAGUE_REF, TEAM_GAMES_GAMES_REF, TEAM_GAMES_TEAMS_REF, PLAYER_STATS_TEAM_GAMES_REF, PLAYER_STATS_PLAYERS_REF]
-
 CREATE_TABLES = [LEAGUE_TABLE, PLAYER_TABLE, TEAMS_TABLE, LEAGUE_SEASONS, GAMES_TABLE, TEAM_GAMES_TABLE, PLAYER_STATS_TABLE]
+TABLE_KEYS = {'leagues': 'league_no', 'players': 'player_no', 'teams': 'team_no', 'league_seasons': 'idx',
+              'games': 'game_no', 'team_games': 'team_game_id', 'player_stats': 'idx'}
 
-TABLE_NAMES = ['leagues', 'players', 'teams', 'league_seasons', 'games', 'team_games', 'player_stats']
-
-### SQL connection:
-
-USERNAME = 'root'
-PASSWORD = 'root'
-HOST = 'localhost'
+#Tables
+LEAGUES_TABLE_NAME = 'leagues'
+PLAYERS_TABLE_NAME = 'players'
+TEAMS_TABLE_NAME = 'teams'
+LEAGUE_SEASONS_TABLE_NAME = 'league_seasons'
+GAMES_TABLE_NAME = 'games'
+TEAM_GAMES_TABLE_NAME = 'team_games'
+PLAYER_STATS_TABLE_NAME = 'player_stats'

@@ -8,50 +8,75 @@ The Proballers website offers a worldwide data, updates and insights on basketba
 It gives the user access to a lot of stas, players profiles, team rosters, league scores and standings
 both from the past and the most recent gaems.
 
-This package enables to scrape players profiles, leagues & compititions, teams and scores.
-It also serves as a platform for future extention to scrape detailed player stas for every game in every season and every compitition.
+This package enables to scrape players profiles, leagues & compititions, teams, game results and player stats.
+The data is stored in a database which can be created with its table easily.
 
-**List of modules:**
-- players: scrape players profiles to create player ID card / data farame of Id cards.
-- teams: scrape team pages to create team ID card or recive it as a data frame of all teams.
-- games: scrape league schedules per season to get game details and results.
-- leagues: scrape the home page to get a data frame of all available leagues.
-- usfull functions : methods that are used by the other modules.
+**List of modules:**<br>
 
-**Run the code**
+_scraping modules:_<br>
 
-players:
-  run the get_id_card(player_url) function to get a single player ID card for provided player url*.
-  to get a dataframe of player ID cards run the function get_players_df(lst_of_urls) which takes a list of player urls.
+- players: scrape players profiles to create players table.
+- teams: scrape team pages to create teams table.
+- games: scrape league schedules per season to create games table and player stats tables.
+- leagues: scrape the home page to create leagues table and get list of available leagues to scrpae.
+- database: create database with its tables
+
+_configuration and maitenance:_
+- usfull functions: methods that are used by the other modules.
+- scraper_config: maitain constants, tags, labels etc.
+- database_config: config module for database creation and usages
+
+main: responsible for the interaction with user, validate input and use the other modules.
+
+
+## Run the code
+_**Scrape and save data to the database by league and season:**_
+
+* The user can use the scraper through CLI by running the main.py file.
+*  in order to scrape and save into database the user need to provide two parameters:
+    1. **league** - the league that the user is interested to scrape.
+        - input: league name or league number
+    2. **season** - the season that the user is interested to scrape.
+        - input: the start year of the season.
   
-  * player url - the general from of player url is : 'https://www.proballers.com/basketball/player/**id/name**'
-    to scrape all players : run the df function with a list or range of integers from 1 to LAST_PLAYER_ID (which is now 229373).
-      
-games:
-  to get all game results of a given league in a given season run: get_games_from_league_and_season(league_id, season)
-  to get a list with all game IDs from a league, season and page number run: get_game_ids(league_id, season, page)
-	Here it is important to specify the pagination and if you want to run for all the pages run get_pagination(league_id, season) to
-	get the number of game pages that exist for a league in a specific season and then iterate over all pages.
+        example:<br>
+              the user is interested in scraping data from the NBA league from season 2009-2010.<br>the command will be: "main.py nba 2009"<br>
+   
+* get list of available leagues: by typing the command "main.py --help leagus" the user can print list of all available leagues to scrape.
+* help: running the command "main.py --help" will print help info.
 
-teams:
-  to get all team results of a given league run: get_teams_from_league(league_id)
-  to get a list with details (name, country) for a given team run: get_team_details(team_id)
-  to get all the teams that participated in the league league_id in the season season run: get_teams_per_season(league_id, season)
+* technical parameters:
+   - batch size for insertion in data. default value is 1,000.
+<br>
+     
+_**Create and use Database:**_:<br>
 
-leagues:
-  run the get_league_urls() function to get a list of all leagues urls.
-  run the get_leagues_df(league_urls) with the list of urls to get a data frame with leagues IDs, name and url.
+- The scraper saves scrapped data into a database according to the schema (see on database section).
+- The database.py module enables to create a new database with all its tables.<br>
 
-useful functions:
-  contians the get_all_season(league_url) which is very useful in combination with the leagues df.
+**Todo before running the scraper:**
+- update database configuration file with your credentials:
+    1. go to the folder database config
+    2. in the same directory create a copy of the file database_config_copy and
+    rename it to be database_config.py.
+    3. in the new file "database_config.py" update your sql credentials. it's in the top of the page.
+
+- create database according to schema below. this can be done running the file "database.py". it will create new database named "proballers".
+- if you already have database with this name you can choose another name by changing the DATABASE_NAME constant in the database_config.py file.
+
+<br>
   
-main challenge:
-  for none of the concepts above there is no option to retrieve a complete table of all records.
-  almost for each data point the user need to navigate through: continent --> league --> season --> page and so on..
-  we solved it by creating the usful_function module which with combination with the league module and team module give
-  us the ability to nevigate through the all website easily!
- 
- ### Database
+_**assumptions and default values:**_<br>
+- when using the scraper by giving a league and season:
+    - new records will be inserted to the following tables: players, teams, games, team_games and player_stats.
+    - if a record is already exist in the database, it will not be scraped.
+    - in case that some page cannot be scraped at the moment (page is not responding etc.) 
+      the sraper will skip that record after several tries. Avialable data will still be scraped and saved to database.
+- when running the scraper it assumes that the database is already exist. so the data base should be created before trying to scrape.
+- number of tries when page is not responding  is 5 tries
+
+
+## Database
 **Database overview:**<br>
 This database has been created with the idea that the main use of the data will be focusing on player performance and the impact on his team. Secondary use will be analyzing player performances raltive to themselves and in different leagues and stage of career.
 
@@ -73,8 +98,9 @@ comment: some tables are small and could be merged with others but we decided to
 - games and leagues, on league_no as FK.
 -league_season table is not linked for the use of db maintainace and retrieve list of avaiable leagues to scrap.
 
-* please see full DB diagram in project folder
-* field details in different
+* please see full DB diagram in project folder in file "EDR Proballers.pdf".
+* please see field details for each table under table_details.txt
+
 
 
 Roy & Itamar
