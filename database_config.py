@@ -101,9 +101,3 @@ TABLE_NAMES = ['leagues', 'players', 'teams', 'league_seasons', 'games', 'team_g
 USERNAME = 'root'
 PASSWORD = 'root'
 HOST = 'localhost'
-
-# con = db.connect_sql()
-
-# df = sql_query("show databases")
-
-# print(con)
