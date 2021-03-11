@@ -39,16 +39,17 @@ GAMES_TABLE = "CREATE TABLE games (\
             )"
 
 TEAM_GAMES_TABLE = "CREATE TABLE team_games (\
-                  team_game_id int PRIMARY KEY,\
+                  team_game_id varchar(20) PRIMARY KEY,\
                   game_no int,\
                   team_no int,\
                   score int,\
-                  win BOOL\
+                  win BOOL,\
+                  home bool\
                 )"
 
 PLAYER_STATS_TABLE = "CREATE TABLE player_stats (\
                       idx int PRIMARY KEY AUTO_INCREMENT,\
-                      team_game_id int,\
+                      team_game_id varchar(20),\
                       player_no int,\
                       minuets int,\
                       2M int,\
