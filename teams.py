@@ -4,6 +4,7 @@ from useful_functions import get_source, insert_rows, progress_bar, remove_exist
 
 
 def get_teams_per_season(league_id, league_name, season):
+    
     """ This function returns all the teams that participated in the league league_id in the season season.
     """
     url = cfg.TEAMS_PATH.format(league_id, league_name, season)
@@ -20,6 +21,7 @@ def get_teams_per_season(league_id, league_name, season):
 
 
 def get_team_details(team_id):
+    
     """Returns a list with details (name, country)
         for a given team.
     """
@@ -37,6 +39,9 @@ def get_team_details(team_id):
 
 
 def save_teams(league_id, league_name, season, connection, chunk_size):
+    """ insert to database. scrapped data to teams table
+    """
+    
     if not cfg.SILENT_MODE:
         print("Save teams...")
 
