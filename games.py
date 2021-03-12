@@ -103,6 +103,9 @@ def get_game_details(game_id):
 
 
 def save_games(league_id, league_name, season, connection, chunk_size, game_limit):
+    """ inserts to database scrapped data of: games, team games, players and player stats
+    """
+    
     if not cfg.SILENT_MODE:
         print("Save games...")
 
