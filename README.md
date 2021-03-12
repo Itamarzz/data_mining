@@ -65,7 +65,7 @@ _**Create and use Database:**_:<br>
 
 - create database according to schema below. this can be done running the file "database.py". it will create new database named "proballers".
 - if you already have database with this name you can choose another name by changing the DATABASE_NAME constant in the database_config.py file.
-
+   
 <br>
   
 _**assumptions and default values:**_<br>
@@ -77,6 +77,12 @@ _**assumptions and default values:**_<br>
 - when running the scraper it assumes that the database is already exist. so the data base should be created before trying to scrape.
 - number of tries when page is not responding  is 5 tries
 
+_**execute examples arguments:**_<br>
+```
+> -l puerto-rico-bsn -s 2019 -gl 2
+> -l nba -s 2020 -gl 2
+> -l nba -s 2020  -c 100 -gl 10
+```
 
 ## Database
 
