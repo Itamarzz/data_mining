@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 
 
 def get_source(url):
+    
     """ Returns a BeautifulSoup object with the source of given url """
 
     response = requests.get(url)
@@ -27,6 +28,10 @@ def get_source(url):
 
 
 def get_all_seasons(url):
+    
+    """ Returns a list with all available seasons to scrape for a given league url
+    """
+    
     response = requests.get(url)
 
     if response.status_code not in [500, 200]:
@@ -45,6 +50,10 @@ def get_all_seasons(url):
 
 
 def get_seasons_list(league_id, league_name):
+    
+    """ Returns a list of available seasons for league
+    """
+    
     soup = get_source(cfg.TEAMS_PATH.format(league_id, league_name, 0))
     seasons = []
     for div in soup.find_all("div", {"class": "card card-body"}):
@@ -84,6 +93,7 @@ def insert_rows(data, table, connection, chunk_size=1000, data_types=None, index
 
 
 def get_keys_from_table(table):
+    
     """ returns df as a result of sql select query
     """
 
@@ -97,8 +107,10 @@ def get_keys_from_table(table):
 
 
 def remove_existing_keys(table, keys):
+    
     """ returns list of keys that do not already exist in the database
     """
+    
     lst_db = get_keys_from_table(table)
     new_lst = [key for key in keys if key not in lst_db]
     return new_lst
