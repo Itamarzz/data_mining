@@ -122,7 +122,7 @@ def main():
     except Exception as ex:
         print(f'ERROR: Invalid input: {ex}\nFor proper usage:\n{cfg.HELP_STRING}', )
     else:
-        print(f'\nSUCCESS:\n ', ' ')
+        print(f'\nSUCCESS!!\n ', ' ')
 
 
 if __name__ == '__main__':

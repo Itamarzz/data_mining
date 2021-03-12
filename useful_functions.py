@@ -16,7 +16,7 @@ def get_source(url):
     count_retries = 0
     while response.status_code == 500:
         count_retries += 1
-        print("Error 500. Trying Again...")
+        #print("Error 500. Trying Again...")
         response = requests.get(url)
         if count_retries == cfg.MAX_RETRIES:
             return None

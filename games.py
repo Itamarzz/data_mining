@@ -119,7 +119,11 @@ def save_games(league_id, league_name, season, connection, chunk_size, game_limi
         games = {}
         teams_games = {}
         player_stats_games = []
+
+        if game_limit is not None:
+            game_ids = game_ids[:game_limit]
         len_games = len(game_ids)
+
         for index, game_id in enumerate(game_ids):
             result = get_game_details(game_id)
             if not result:
@@ -136,9 +140,6 @@ def save_games(league_id, league_name, season, connection, chunk_size, game_limi
             if not cfg.SILENT_MODE:
                 progress_bar(index+1, len_games, "Get games details")
 
-            if game_limit is not None and index+1 == game_limit:
-                break
-
         if not cfg.SILENT_MODE:
             print("\nGet games details list passed!")
 
@@ -153,7 +154,11 @@ def save_games(league_id, league_name, season, connection, chunk_size, game_limi
         }
 
         insert_rows(games, dbcfg.GAMES_TABLE_NAME, connection, chunk_size, data_types=games_data_type)
+        if not cfg.SILENT_MODE:
+            print("Insert games rows passed!")
         insert_rows(teams_games, dbcfg.TEAM_GAMES_TABLE_NAME, connection, chunk_size)
+        if not cfg.SILENT_MODE:
+            print("Insert team_games rows passed!")
 
         new_player_stats = {}
         for index, element in enumerate(player_stats_games):

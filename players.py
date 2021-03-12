@@ -87,7 +87,8 @@ def save_teams(players_id, connection, chunk_size):
             'nationality': 'str'
         }
         insert_rows(players_details, dbcfg.PLAYERS_TABLE_NAME, connection, chunk_size, data_types=data_type)
-        print("Insert players rows passed!")
+        if not cfg.SILENT_MODE:
+            print("Insert players rows passed!")
 
     else:
         if not cfg.SILENT_MODE:
