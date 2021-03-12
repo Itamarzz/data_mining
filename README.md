@@ -1,7 +1,13 @@
 # data_mining
-## Proballers Data Mining Project
+## 1. Proballers Data Mining Project
 
 This project is a tool for scraping the Proballers website.
+
+_**table of contents:**_
+1. Background
+2. List of modules
+3. How to run the code and create database
+4. Database overview
 
 **Background:** <br>
 The Proballers website offers a worldwide data, updates and insights on basketball.
@@ -11,7 +17,7 @@ both from the past and the most recent gaems.
 This package enables to scrape players profiles, leagues & compititions, teams, game results and player stats.
 The data is stored in a database which can be created with its table easily.
 
-**List of modules:**<br>
+## 2. List of modules:
 
 _scraping modules:_<br>
 
@@ -29,7 +35,7 @@ _configuration and maitenance:_
 main: responsible for the interaction with user, validate input and use the other modules.
 
 
-## Run the code
+## 3. Run the scraper and create database
 
 _**Scrape and save data to the database by league and season:**_
 
@@ -85,7 +91,7 @@ _**assumptions and default values:**_<br>
 - when running the scraper it assumes that the database is already exist. so the data base should be created before trying to scrape.
 - number of tries when page is not responding  is 5 tries
 
-## Database
+## 4. Database
 
 **Database overview:**<br>
 This database has been created with the idea that the main use of the data will be focusing on player performance and the impact on his team. Secondary use will be analyzing player performances raltive to themselves and in different leagues and stage of career.
