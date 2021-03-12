@@ -79,16 +79,18 @@ _**assumptions and default values:**_<br>
 
 
 ## Database
+
 **Database overview:**<br>
 This database has been created with the idea that the main use of the data will be focusing on player performance and the impact on his team. Secondary use will be analyzing player performances raltive to themselves and in different leagues and stage of career.
 
 **Tables**:
-- _players_, player basic info such as: name, height, position, date of birth with player number as primary key
+- _players_, player id_card with the fields: name, height in meters (float), position (role of player in team), date of birth with player number as primary key
 - _teams_, stores team basic info (team number, name, country) with team number as primary key.
-- _leagues_, stores information on the league with leagur number as primary key.
-- _games_, to store game information (league, season, date) with game number as a primary key.
-- _**team_games**_, stores team games with its score, weather it was a win and if the team played at home. 
-- _**player_stats**_, stores player stats per game (shoots taken, shoot made, rebounds, steals etc.).
+- _leagues_, stores information on leagues and competitions (league name) with league number as primary key.
+- _games_, to store game information: season, date, league number as a foreign key with game number as a primary key. this table connects team_games table to league table which will allow to analyze game stats in contex of different competitions.
+- _**team_games**_, stores team games with its score in the game (int), weather the team won (bool), team played at home (bool), <br>
+        team number (foreign key), game number (as a foreign key) and team_game_id as a primary key.    this table is in the heart of the database, connecting all stats from               player stats table to games and then to leagues.
+- _**player_stats**_, stores player stats per game (shoots taken vs shoot made, rebounds, steals, fouls, points scored, minutes played and effeciency. all are integers) with team_games_id as a foriegn key and auto increment running index as a primary key. most of the interesting data and stats that we are interested in are stored in this table  which with the link to the team_games table enable us to analyze this stats in different contexts.
 
 comment: some tables are small and could be merged with others but we decided to keep them in order to allow scalability.
 
