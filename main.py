@@ -88,7 +88,7 @@ def validate_input(args, available_leagues):
 
     chunk_size = get_chunk_size(args)
 
-    games_limit = get_games_limit()
+    games_limit = get_games_limit(args)
 
     return league_no, league_name, season, chunk_size, games_limit
 
