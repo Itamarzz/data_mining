@@ -30,6 +30,14 @@ main: responsible for the interaction with user, validate input and use the othe
 
 
 ## Run the code
+
+_**execute examples arguments:**_<br>
+```
+> -l puerto-rico-bsn -s 2019 -gl 2 # league: puerto-rico-bsn, season: 2019, first 2 games
+> -l nba -s 2020 -gl 2 # league: nba, season: 2020, first 2 games
+> -l nba -s 2020  -c 100 -gl 10 # league: nba, season: 2020, first 10 games with chunksize 100
+```
+
 _**Scrape and save data to the database by league and season:**_
 
 * The user can use the scraper through CLI by running the main.py file.
@@ -76,13 +84,6 @@ _**assumptions and default values:**_<br>
       the sraper will skip that record after several tries. Avialable data will still be scraped and saved to database.
 - when running the scraper it assumes that the database is already exist. so the data base should be created before trying to scrape.
 - number of tries when page is not responding  is 5 tries
-
-_**execute examples arguments:**_<br>
-```
-> -l puerto-rico-bsn -s 2019 -gl 2
-> -l nba -s 2020 -gl 2
-> -l nba -s 2020  -c 100 -gl 10
-```
 
 ## Database
 
