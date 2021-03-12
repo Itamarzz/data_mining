@@ -4,92 +4,125 @@ import useful_functions as uf
 import config.scrapr_config as cfg
 import config.database_config as dbcfg
 import argparse
-
 from sqlalchemy import create_engine
 from teams import save_teams
 from games import save_games
 
-HELP_STRING = """Welcome to the proballers scrapper!
 
-usage: main.py [option] ... [LEAGUE] [SEASON] ...
-Example Usage: main.py nba 2020
-    
-It is also possible to select the league by identifier --> main.py 442 2020
+def parse_args():
 
-Available Options (Use options before positional arguments):
---player_stats: Include game player stats
+    """ returns user input from terminal
+    """
 
-Help Options:
-leagues_list: Show league list
-Example Usage: main.py --help leagues_list
-"""
+    parser = argparse.ArgumentParser(description=str(cfg.DESCRIPTION))
+    parser.add_argument('-l', '--league', type=str,metavar='', help='use -a to print available list of leagues to scrape')
+    parser.add_argument('-s', '--season', type=int, metavar='', help='season to scrape, input first year of season')
+    parser.add_argument('-c', '--chunk_size', type=int, metavar='', help='set chunk size for insertion to the database')
+    parser.add_argument('-gl', '--games_limit', type=int, metavar='', help='set limit to max number of games to scrap')
+    parser.add_argument('-a', '--availability', action='store_true', help='print all available leagues to scrape')
 
-NUM_ARGS_NO_ARGS = 1
+    return parser.parse_args()
 
 
-def get_and_validate_league(league):
-    leagues_list = lg.get_leagues()
+def get_league_no(league, available_leagues):
+    """ checks if user input for league to scrape is valid and available and returns league number
+    """
 
-    if league.isdigit():
-        if league not in leagues_list.keys():
-            raise ValueError(f'League id not exist')
-        else:
-            return league, leagues_list[league]
-    else:
-        if league not in leagues_list.values():
-            raise ValueError(f'League name not exist')
-        else:
-            for index, name in leagues_list.items():
-                if name == league:
-                    return index, league
+    if league not in available_leagues.values():
+        raise ValueError(f'League name not exist')
+
+    for league_no, name in available_leagues.items():
+        if name == league:
+            return league_no
 
 
 def validate_season(league_id, league_name, season):
+    """ checks if user input for season to scrape is valid and available
+    """
     seasons_list = uf.get_seasons_list(league_id, league_name)
-    if season not in seasons_list:
+    if str(season) not in seasons_list:
         raise ValueError(f'Season not exist')
 
 
-def main():
-    # parser = argparse.ArgumentParser(description='Process some integers.')
-    # parser.add_argument('leagues')
-    # parser.add_argument('seasons')
-    #
-    # args = parser.parse_args()
-    # print(args.accumulate(args.integers))
-
-    if len(sys.argv) == NUM_ARGS_NO_ARGS:
-        print(HELP_STRING)
-        return
-    elif sys.argv[1] == '--help':
-        if 'leagues_list' in sys.argv:
-            leagues_list = lg.get_leagues()
-            for k, v in leagues_list.items():
-                print(f"{k}, {v}")
-            return
+def get_chunk_size(args):
+    """ returns valid chunk size
+    """
+    if args.chunk_size:
+        if args.chunk_size > 0:
+            chunk_size = args.chunk_size
         else:
-            print(HELP_STRING)
-            return
+            print('invalid chunk size. chunk size must be positive integer')
+            sys.exit(1)
+    else:
+        chunk_size = cfg.CHUNK
+
+    return chunk_size
+
+
+def get_games_limit(args):
+    """ returns valid games limit value
+    """
+    if args.games_limit:
+        if args.games_limit >= 0:
+            games_limit = args.games_limit
+        else:
+            print('invalid games_limit value. in order to limit max games to be scrapped please make sure to provide non negative value')
+            sys.exit(1)
+    else:
+        games_limit = cfg.GAME_LIMIT
+
+    return games_limit
+
+def validate_input(args, available_leagues):
+    """ validate input of league and season
+    """
+
+    if (not args.league) or (not args.season):
+        print(cfg.HELP_STRING)
+        sys.exit(1)
+    else:
+        league_name = args.league
+        season = args.season
+        league_no = get_league_no(league_name, available_leagues)
+        validate_season(league_no, league_name, season)
+
+    chunk_size = get_chunk_size(args)
+
+    games_limit = get_games_limit()
+
+    return league_no, league_name, season, chunk_size, games_limit
+
+
+def print_leagues(leagues):
+    """ prints all available leagues
+    """
+    print("\n#---------- available leagues: ----------#\n")
+    for k, v in leagues.items():
+        print(f"{k}, {v}")
+
+
+def main():
 
     try:
-        season = sys.argv[-1]
-        league = sys.argv[-2]
-        player_stats = "player_stats" in sys.argv
+        args = parse_args()
+        available_leagues = lg.get_leagues()
+        if args.availability:
+            print_leagues(available_leagues)
+        else:
+            league_no, league_name, season, chunk_size, games_limit = validate_input(args, available_leagues)
 
-        league_id, league_name = get_and_validate_league(league)
-        validate_season(league_id, league_name, season)
         if not cfg.SILENT_MODE:
             print("Validation Passed!")
 
         connection = create_engine(f'mysql+pymysql://{dbcfg.USERNAME}:{dbcfg.PASSWORD}@{dbcfg.HOST}/{dbcfg.DATABASE_NAME}')
 
-        save_teams(league_id, league_name, season, connection)
-        save_games(league_id, league_name, season, connection, player_stats)
+        save_teams(league_no, league_name, season, connection, chunk_size)
+        save_games(league_no, league_name, season, connection, chunk_size, games_limit)
 
     except Exception as ex:
-        print(f'ERROR: Invalid input: {ex}\nFor proper usage:\n{HELP_STRING}', )
+        print(f'ERROR: Invalid input: {ex}\nFor proper usage:\n{cfg.HELP_STRING}', )
     else:
-        print(f'SUCCESS: Result of replacing the letters is:\n ', ' ')
+        print(f'\nSUCCESS:\n ', ' ')
 
 
 if __name__ == '__main__':

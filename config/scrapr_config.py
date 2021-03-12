@@ -31,3 +31,24 @@ ID_GAME_INDEX = 3
 PLAYER_PATH = PATH_ROOT + '/basketball/player/{}'
 
 
+
+# main - user interface
+
+NUM_ARGS_NO_ARGS = 1
+
+DESCRIPTION = "scrape the Proballers and save it to the proballers database"
+
+HELP_STRING= '\n#---------- Hello and Welcome to the Proballers Scraper !!! ---------#\n\n' \
+          'in order to start scraping two arguments are required:\n' \
+          '1. -l <league name> -->      use -a or --availability to print list of available leagues\n' \
+          '2. -s <year> -->      where year is the first year of the required season.\n' \
+             '                   so for season 2015-2016 --> year = 2015\n' \
+          'please make sure to provide both\n\n' \
+          'for example: if you want to scrap the NBA league in season 2018-2019:\n' \
+          '             the input shoud be: "-l nba -s 2018\n\n ' \
+          'for more info use the --help'
+
+# insertion to db:
+
+CHUNK = 1000
+GAME_LIMIT = None
