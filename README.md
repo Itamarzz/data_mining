@@ -45,7 +45,10 @@ _**Scrape and save data to the database by league and season:**_
 * get list of available leagues: by typing the command "main.py -a" or "--availability" the user can print list of all available leagues to scrape.
 
 * technical parameters:
-   - batch size for insertion in data. default value is 1,000.
+   - chunk size for insertion in data. default value is 1,000. this value can be changed by using -c <your chunk size> or --chunk_size <your chunk size>
+   - max games to scrap: to restrict the quantity of games to be scrapped. can be used for testig becuase games scrapping for whole season may take some time.
+      the default value is None so there is no limit unless the user chooses to.<br>
+        to set a limit use the optional command "-gl <max games to scrap>" or "--games_limit <max games to scrap>".
 <br>
      
 _**Create and use Database:**_:<br>
