@@ -1,4 +1,5 @@
 import re
+import numpy as np
 import config.scrapr_config as cfg
 import config.database_config as dbcfg
 from useful_functions import get_source, insert_rows, progress_bar, remove_existing_keys
@@ -24,7 +25,10 @@ def get_player_details(soup):
         value = re.sub('\s+', ' ', words[1])
         id_card_dict[key] = value
 
-    id_card_dict['Height'] = get_height_in_meters(id_card_dict['Height'])
+    if '-' == id_card_dict['Height'].strip():
+        id_card_dict['Height'] = np.nan
+    else:
+        id_card_dict['Height'] = get_height_in_meters(id_card_dict['Height'])
 
     return id_card_dict
 
@@ -67,11 +71,10 @@ def save_teams(players_id, connection):
     if not cfg.SILENT_MODE:
         print("Save players...")
 
-    players_id = remove_existing_keys(dbcfg.TEAMS_TABLE_NAME, players_id)
-    print(players_id)
+    players_id = remove_existing_keys(dbcfg.PLAYERS_TABLE_NAME, players_id)
     players_details = get_player_info_dict(players_id)
-    if len(players_id) > 0:
-        players_id
+
+    if len(players_details) > 0:
         if not cfg.SILENT_MODE:
             print("Get players details list passed!")
 

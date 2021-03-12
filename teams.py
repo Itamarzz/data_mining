@@ -69,7 +69,7 @@ def save_teams(league_id, league_name, season, connection):
             print("Insert teams rows passed!")
     else:
         if not cfg.SILENT_MODE:
-            print("Not news teams")
+            print("No news teams")
         else:
             pass
 
