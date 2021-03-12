@@ -39,6 +39,7 @@ def get_league_no(league, available_leagues):
 def validate_season(league_id, league_name, season):
     """ checks if user input for season to scrape is valid and available
     """
+    
     seasons_list = uf.get_seasons_list(league_id, league_name)
     if str(season) not in seasons_list:
         raise ValueError(f'Season not exist')
@@ -47,6 +48,7 @@ def validate_season(league_id, league_name, season):
 def get_chunk_size(args):
     """ returns valid chunk size
     """
+    
     if args.chunk_size:
         if args.chunk_size > 0:
             chunk_size = args.chunk_size
@@ -62,6 +64,7 @@ def get_chunk_size(args):
 def get_games_limit(args):
     """ returns valid games limit value
     """
+    
     if args.games_limit:
         if args.games_limit >= 0:
             games_limit = args.games_limit
@@ -103,7 +106,10 @@ def print_leagues(leagues):
 
 
 def main():
-
+    """ takes arguments from terminal using parse_args func, validate input through validation functions 
+    and call scraping function to scrape and insert data to the database from the relevant modules
+    """
+    
     try:
         args = parse_args()
         available_leagues = lg.get_leagues()
