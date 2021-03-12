@@ -30,7 +30,7 @@ def get_game_ids(league_id, league_name, season, page):
     for div in soup.find_all("div", class_=cfg.SEARCH_GAMES_IDS_BY_CLASS):
         for link in div.select("a"):
             if cfg.GAME_NAME in link['href']:
-                games.append(link['href'].split("/")[cfg.ID_GAME_INDEX])
+                games.append(int(link['href'].split("/")[cfg.ID_GAME_INDEX]))
     return games
 
 
@@ -58,13 +58,13 @@ def get_game_details(game_id):
     local_score, visit_score = teams.split(" - ")
 
     headers_team_stats = ["minuets", "2M-2A", "3M-3A", "FG%", "1M-1A", "1%", "o_r",
-                          "dr", "reb", "ast", "stl", "blk", "fo", "pts", "ef"]
+                          "dr", "reb", "ast", "stl", "blk", "fo", "pts", "eff"]
     player_stats = []
     for table_team in ["1", "2"]:
         if table_team == "1":
-            team_game_id = game_id+'l'
+            team_game_id = str(game_id) + 'l'
         else:
-            team_game_id = game_id + 'v'
+            team_game_id = str(game_id) + 'v'
 
         for tr in soup.find("div", class_="home-game__content__team-stats__content-team-"+table_team).select('tbody tr'):
             player_id = tr.select("td a")[0]['href'].split("/")[3]
@@ -77,30 +77,32 @@ def get_game_details(game_id):
             table_rows["3m"], table_rows["3a"] = table_rows["3M-3A"].split('-')
             table_rows["1m"], table_rows["1a"] = table_rows["1M-1A"].split('-')
 
-            delete_rows = ["FG%", "1%", "2M-2A", "3M-3A", "1M-1A"]
+            delete_rows = ["FG%", "1%", "2M-2A", "3M-3A", "1M-1A", "reb"]
             for delete_row in delete_rows:
                 del table_rows[delete_row]
 
-            table_rows["player_id"] = int(player_id)
+            table_rows["player_no"] = int(player_id)
             table_rows["team_game_id"] = team_game_id
             player_stats.append(table_rows)
 
     game_info = {'game_date': match_date}
-    team_games = {game_id+'l': {'game_no': game_id,
-                                'team_no': local_team,
-                                'score': local_score,
-                                'win': local_score > visit_score,
-                                'home': True},
-                  game_id+'v': {'game_no': game_id,
-                                'team_no': visit_team,
-                                'score': visit_score,
-                                'win': visit_score > local_score,
-                                'home': False}}
+    team_games = {str(game_id)+'l': {'game_no': game_id,
+                                     'team_no': local_team,
+                                     'score': local_score,
+                                     'win': local_score > visit_score,
+                                     'home': True,
+                                     'team_game_id': str(game_id)+'l'},
+                  str(game_id)+'v': {'game_no': game_id,
+                                     'team_no': visit_team,
+                                     'score': visit_score,
+                                     'win': visit_score > local_score,
+                                     'home': False,
+                                     'team_game_id': str(game_id)+'v'}}
 
     return game_info, team_games, player_stats
 
 
-def save_games(league_id, league_name, season, connection, player_stats):
+def save_games(league_id, league_name, season, connection, chunk_size, game_limit):
     if not cfg.SILENT_MODE:
         print("Save games...")
 
@@ -108,7 +110,7 @@ def save_games(league_id, league_name, season, connection, player_stats):
     num_of_pages = get_pagination(league_id, league_name, season)
     for i in range(1, num_of_pages):
         game_ids += get_game_ids(league_id, league_name, season, i)
-    game_ids = remove_existing_keys(dbcfg.TEAMS_TABLE_NAME, game_ids)
+    game_ids = remove_existing_keys(dbcfg.GAMES_TABLE_NAME, game_ids)
 
     if not cfg.SILENT_MODE:
         print("Get games list passed!")
@@ -127,26 +129,41 @@ def save_games(league_id, league_name, season, connection, player_stats):
             games[game_id] = games_info
             games[game_id]['league'] = league_id
             games[game_id]['season'] = season
+            games[game_id]['game_no'] = game_id
             teams_games.update(teams_game)
             player_stats_games += player_stats
 
             if not cfg.SILENT_MODE:
                 progress_bar(index+1, len_games, "Get games details")
-            break
+
+            if game_limit is not None and index+1 == game_limit:
+                break
+
         if not cfg.SILENT_MODE:
             print("\nGet games details list passed!")
 
-        players_list = list(set([player_stat['player_id'] for player_stat in player_stats_games]))
-        players.save_teams(players_list, connection)
+        players_list = list(set([player_stat['player_no'] for player_stat in player_stats_games]))
+        players.save_teams(players_list, connection, chunk_size)
 
-        insert_rows(games, dbcfg.GAMES_TABLE_NAME, connection)
-        insert_rows(teams_games, dbcfg.TEAM_GAMES_TABLE_NAME, connection)
+        games_data_type = {
+            'game_date': 'date',
+            'league': 'int',
+            'season': 'int',
+            'game_no': 'int'
+        }
 
-        #if player_stats:
-            #insert_rows(player_stats, dbcfg.PLAYER_STATS_TABLE_NAME, connection)
+        insert_rows(games, dbcfg.GAMES_TABLE_NAME, connection, chunk_size, data_types=games_data_type)
+        insert_rows(teams_games, dbcfg.TEAM_GAMES_TABLE_NAME, connection, chunk_size)
+
+        new_player_stats = {}
+        for index, element in enumerate(player_stats_games):
+            new_player_stats[index] = element
+
+        insert_rows(new_player_stats, dbcfg.PLAYER_STATS_TABLE_NAME, connection, chunk_size)
+
     else:
         if not cfg.SILENT_MODE:
-            print("Not news games")
+            print("No news games")
         else:
             pass
 

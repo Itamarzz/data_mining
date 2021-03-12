@@ -11,7 +11,7 @@ def get_source(url):
 
     response = requests.get(url)
     if response.status_code not in [500, 200]:
-        raise ValueError(f"Unknown request error: {response.status_code} \n url: {url}")
+        return None
 
     count_retries = 0
     while response.status_code == 500:

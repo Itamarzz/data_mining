@@ -35,18 +35,20 @@ _**Scrape and save data to the database by league and season:**_
 * The user can use the scraper through CLI by running the main.py file.
 *  in order to scrape and save into database the user need to provide two parameters:
     1. **league** - the league that the user is interested to scrape.
-        - input: league name or league number
+        - input: -l [league name]
     2. **season** - the season that the user is interested to scrape.
-        - input: the start year of the season.
+        - input: the start year of the season --> -s [year]
   
         example:<br>
-              the user is interested in scraping data from the NBA league from season 2009-2010.<br>the command will be: "main.py nba 2009"<br>
+              the user is interested in scraping data from the NBA league from season 2009-2010.<br>the command will be: "main.py -l nba -s 2009"<br>
    
-* get list of available leagues: by typing the command "main.py --help leagus" the user can print list of all available leagues to scrape.
-* help: running the command "main.py --help" will print help info.
+* get list of available leagues: by typing the command "main.py -a" or "--availability" the user can print list of all available leagues to scrape.
 
 * technical parameters:
-   - batch size for insertion in data. default value is 1,000.
+   - chunk size for insertion in data. default value is 1,000. this value can be changed by using -c <your chunk size> or --chunk_size <your chunk size>
+   - max games to scrap: to restrict the quantity of games to be scrapped. can be used for testig becuase games scrapping for whole season may take some time.
+      the default value is None so there is no limit unless the user chooses to.<br>
+        to set a limit use the optional command "-gl <max games to scrap>" or "--games_limit <max games to scrap>".
 <br>
      
 _**Create and use Database:**_:<br>

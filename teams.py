@@ -36,7 +36,7 @@ def get_team_details(team_id):
     return {"name": team_name, "country": team_country}
 
 
-def save_teams(league_id, league_name, season, connection):
+def save_teams(league_id, league_name, season, connection, chunk_size):
     if not cfg.SILENT_MODE:
         print("Save teams...")
 
@@ -63,13 +63,13 @@ def save_teams(league_id, league_name, season, connection):
         if not cfg.SILENT_MODE:
             print("\nGet teams details list passed!")
 
-        insert_rows(teams_dict, dbcfg.TEAMS_TABLE_NAME, connection)
+        insert_rows(teams_dict, dbcfg.TEAMS_TABLE_NAME, connection, chunk_size)
 
         if not cfg.SILENT_MODE:
             print("Insert teams rows passed!")
     else:
         if not cfg.SILENT_MODE:
-            print("Not news teams")
+            print("No news teams")
         else:
             pass
 
