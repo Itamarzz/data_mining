@@ -47,12 +47,6 @@ def sql_query(sql_string, con):
     return df
 
 
-# def get_sql_cred():
-#     USERNAME = input('please enter user:')
-#     PASSWORD = input('Password:')
-#
-#     return USERNAME, PASSWORD
-
 
 def create_db():
     """ creating mysql database with given list of tables and references
