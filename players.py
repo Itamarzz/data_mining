@@ -67,7 +67,7 @@ def get_height_in_meters(height):
     return float(height_meters)
 
 
-def save_teams(players_id, connection):
+def save_teams(players_id, connection, chunk_size):
     if not cfg.SILENT_MODE:
         print("Save players...")
 
@@ -86,7 +86,7 @@ def save_teams(players_id, connection):
             'position': 'str',
             'nationality': 'str'
         }
-        insert_rows(players_details, dbcfg.PLAYERS_TABLE_NAME, connection, data_types=data_type)
+        insert_rows(players_details, dbcfg.PLAYERS_TABLE_NAME, connection, chunk_size, data_types=data_type)
         print("Insert players rows passed!")
 
     else:

@@ -102,7 +102,7 @@ def get_game_details(game_id):
     return game_info, team_games, player_stats
 
 
-def save_games(league_id, league_name, season, connection, player_stats):
+def save_games(league_id, league_name, season, connection, chunk_size):
     if not cfg.SILENT_MODE:
         print("Save games...")
 
@@ -140,7 +140,7 @@ def save_games(league_id, league_name, season, connection, player_stats):
             print("\nGet games details list passed!")
 
         players_list = list(set([player_stat['player_no'] for player_stat in player_stats_games]))
-        players.save_teams(players_list, connection)
+        players.save_teams(players_list, connection, chunk_size)
 
         games_data_type = {
             'game_date': 'date',
@@ -149,14 +149,14 @@ def save_games(league_id, league_name, season, connection, player_stats):
             'game_no': 'int'
         }
 
-        insert_rows(games, dbcfg.GAMES_TABLE_NAME, connection, data_types=games_data_type)
-        insert_rows(teams_games, dbcfg.TEAM_GAMES_TABLE_NAME, connection)
+        insert_rows(games, dbcfg.GAMES_TABLE_NAME, connection, chunk_size, data_types=games_data_type)
+        insert_rows(teams_games, dbcfg.TEAM_GAMES_TABLE_NAME, connection, chunk_size)
 
         new_player_stats = {}
         for index, element in enumerate(player_stats_games):
             new_player_stats[index] = element
 
-        insert_rows(new_player_stats, dbcfg.PLAYER_STATS_TABLE_NAME, connection)
+        insert_rows(new_player_stats, dbcfg.PLAYER_STATS_TABLE_NAME, connection, chunk_size)
 
     else:
         if not cfg.SILENT_MODE:
