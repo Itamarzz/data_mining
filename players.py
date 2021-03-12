@@ -9,6 +9,7 @@ PLAYER_INFO_CLASS = 'home-player__card-identity__profil__card__infos__entry'
 
 
 def get_player_details(soup):
+    
     """ Returns a dictionary with details about player.
         input: soup object of source ('lxml')
         output: dictionary """
@@ -34,6 +35,7 @@ def get_player_details(soup):
 
 
 def get_player_info_dict(lst_of_ids):
+    
     """ Returns list of player id cards. where each id card is represented by a dictionary
     """
 
@@ -58,6 +60,7 @@ def get_player_info_dict(lst_of_ids):
 
 
 def get_height_in_meters(height):
+    
     """ convert height string to float
     """
 
@@ -68,6 +71,9 @@ def get_height_in_meters(height):
 
 
 def save_teams(players_id, connection, chunk_size):
+    """ insert to database. scrapped date into the teams table
+    """
+    
     if not cfg.SILENT_MODE:
         print("Save players...")
 
