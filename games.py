@@ -102,7 +102,7 @@ def get_game_details(game_id):
     return game_info, team_games, player_stats
 
 
-def save_games(league_id, league_name, season, connection, chunk_size):
+def save_games(league_id, league_name, season, connection, chunk_size, game_limit):
     if not cfg.SILENT_MODE:
         print("Save games...")
 
@@ -135,6 +135,9 @@ def save_games(league_id, league_name, season, connection, chunk_size):
 
             if not cfg.SILENT_MODE:
                 progress_bar(index+1, len_games, "Get games details")
+
+            if game_limit is not None and index+1 == game_limit:
+                break
 
         if not cfg.SILENT_MODE:
             print("\nGet games details list passed!")
