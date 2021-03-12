@@ -73,6 +73,7 @@ def get_games_limit(args):
 
     return games_limit
 
+
 def validate_input(args, available_leagues):
     """ validate input of league and season
     """
@@ -116,8 +117,10 @@ def main():
 
         connection = create_engine(f'mysql+pymysql://{dbcfg.USERNAME}:{dbcfg.PASSWORD}@{dbcfg.HOST}/{dbcfg.DATABASE_NAME}')
 
+        lg.save_league(league_no, league_name, connection, chunk_size)
         save_teams(league_no, league_name, season, connection, chunk_size)
         save_games(league_no, league_name, season, connection, chunk_size, games_limit)
+
 
     except Exception as ex:
         print(f'ERROR: Invalid input: {ex}\nFor proper usage:\n{cfg.HELP_STRING}', )

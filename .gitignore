@@ -1,3 +1,5 @@
 .idea/
 venv
 config/database_config.py
+__pycache__/
+config/__pycache__/
