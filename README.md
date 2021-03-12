@@ -53,7 +53,6 @@ _**Scrape and save data to the database by league and season:**_
 <br>
     
 _**execute examples arguments:**_<br>
-<b>Just copy and test</b>
 ```
 > -l puerto-rico-bsn -s 2019 -gl 2 # league: puerto-rico-bsn, season: 2019, max 2 games
 > -l nba -s 2020 -gl 2 # league: nba, season: 2020, max 2 games
