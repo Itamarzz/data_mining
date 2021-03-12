@@ -4,6 +4,9 @@ import useful_functions as uf
 from useful_functions import get_source, insert_rows, progress_bar, remove_existing_keys
 
 def get_leagues():
+    """ Returns a list of all available leagues for scrapping from the Proballers web site
+    """
+    
     soup = uf.get_source(cfg.URL_ALL_LEAGUES)
     leagues_dict = {}
     for league in soup.find_all('a', {"title": cfg.SEARCH_LINK_BY_TITLE}):
@@ -15,6 +18,9 @@ def get_leagues():
 
 
 def save_league(league_no, league_name, connection, chunk_size):
+    """ inserts to database scrapped data to the league table
+    """
+    
     if not cfg.SILENT_MODE:
         print("Save league...")
 
