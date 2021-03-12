@@ -31,13 +31,6 @@ main: responsible for the interaction with user, validate input and use the othe
 
 ## Run the code
 
-_**execute examples arguments:**_<br>
-```
-> -l puerto-rico-bsn -s 2019 -gl 2 # league: puerto-rico-bsn, season: 2019, first 2 games
-> -l nba -s 2020 -gl 2 # league: nba, season: 2020, first 2 games
-> -l nba -s 2020  -c 100 -gl 10 # league: nba, season: 2020, first 10 games with chunksize 100
-```
-
 _**Scrape and save data to the database by league and season:**_
 
 * The user can use the scraper through CLI by running the main.py file.
@@ -58,7 +51,14 @@ _**Scrape and save data to the database by league and season:**_
       the default value is None so there is no limit unless the user chooses to.<br>
         to set a limit use the optional command "-gl <max games to scrap>" or "--games_limit <max games to scrap>".
 <br>
-     
+    
+_**execute examples arguments:**_<br>
+```
+> -l puerto-rico-bsn -s 2019 -gl 2 # league: puerto-rico-bsn, season: 2019, max 2 games
+> -l nba -s 2020 -gl 2 # league: nba, season: 2020, max 2 games
+> -l nba -s 2020  -c 100 -gl 10 # league: nba, season: 2020, max 10 games with chunksize 100
+```
+    
 _**Create and use Database:**_:<br>
 
 - The scraper saves scrapped data into a database according to the schema (see on database section).
