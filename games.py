@@ -11,7 +11,7 @@ def get_pagination(league_id, league_name, season):
     soup = get_source(url)
 
     if soup is None:
-        raise TypeError("The website is not responing in this moment.")  # TODO: corregir texto
+        raise TypeError("The website is not responding in this moment. Try again in few minutes or try different league")
 
     pagination = soup.find_all("a", {"class": cfg.SEARCH_PAGINATION_BY_CLASS})[-1].get_text()
     return int(pagination)
@@ -24,7 +24,7 @@ def get_game_ids(league_id, league_name, season, page):
     soup = get_source(url)
 
     if soup is None:
-        raise TypeError("The website is not responing in this moment.")  # TODO: corregir texto
+        raise TypeError("The website is not responding in this moment. Try again in few minutes or try different league")
 
     games = []
     for div in soup.find_all("div", class_=cfg.SEARCH_GAMES_IDS_BY_CLASS):

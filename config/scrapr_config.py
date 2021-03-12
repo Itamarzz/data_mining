@@ -1,5 +1,5 @@
 PATH_ROOT = "https://www.proballers.com"
-MAX_RETRIES = 1  # TODO: change to 5
+MAX_RETRIES = 5
 SILENT_MODE = False
 
 #Leagues Config

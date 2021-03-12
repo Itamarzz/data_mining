@@ -11,7 +11,7 @@ def get_teams_per_season(league_id, league_name, season):
     soup = get_source(url)
 
     if soup is None:
-        raise TypeError("The website is not responing in this moment.")  # TODO: corregir texto
+        raise TypeError("The website is not responding in this moment. Try again in few minutes or try different league")
 
     teams = []
     for link in soup.find_all('a', class_=cfg.SEARCH_TEAM_BY_CLASS):
