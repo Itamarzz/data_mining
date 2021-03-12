@@ -100,10 +100,9 @@ comment: some tables are small and could be merged with others but we decided to
 - games and leagues, on league_no as FK.
 -league_season table is not linked for the use of db maintainace and retrieve list of avaiable leagues to scrap.
 
-* please see full DB diagram in project folder in file "EDR Proballers.pdf".
-* please see field details for each table under table_details.txt
-
-
+* please see full DB diagram in project folder in file "EDR Proballers.pdf" below.
 
 Roy & Itamar
   
+![image](https://user-images.githubusercontent.com/79038127/110878365-bfae7280-82e3-11eb-8bbc-620e96325d69.png)
+
