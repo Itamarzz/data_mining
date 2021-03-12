@@ -1,0 +1,104 @@
+TODOS:
+
+1. fix things from last submission: --> Both of us
+    - create config file
+    - constants and so --> in config files
+
+2. build function to read player stats per game --> Roy
+
+3. create data base: -->Itamar
+    - create data base diagram - verify Itamar
+    - create data base function in module - Itamar
+    - create config database field (credentials)
+
+4. create function to prepare data before entering to data base: --> Itamar
+    - clean data
+    - assign type
+
+5. create function to insert into database: --> Roy
+    - receives arguments from terminal
+        - user arguments
+        - technical arguments
+    - check that record does not exist already
+
+User Interface :
+    Arguments: Leagues (list or all), Season, include details stats
+    Technical: chunk size,
+
+
+
+
+6. conventions
+    - docstring
+7. error handling
+8. tests
+9. organize git and build git ignore
+10. README --> user instruction
+
+
+
+##Data Base:
+
+### information we want:
+
+1. players performance:
+    - player stats (in games)
+    - players details (height, position age etc.)
+    - impact of player on team --> players in teams table
+
+2. Teams performance:
+    - team stats (in games)
+    - performance to team in comparison to other teams
+
+3. league performance:
+    - league stats --> teams and leagues table
+
+### Tables:
+
+1. leagues (league_no. , name, url)
+2. teams (team_no. , name, country)
+3. teams_in_leagues (to connect teams and competitions, one team can participate in several competitions)
+4. players (player_no, name, date_of_birth, height, position, draft, university)
+5. players_in_teams (player_no, team_no, year --> to connect between players and teams)
+6. games (home_team, visitors, scores, date, winner)
+7. player_stats (player, game, stats ..)
+8. team_stats (game, team, stats ..)
+
+
+## Yoni:
+
+* aggregating tables : team game stats - we can actually sum up players stats in game
+* inferential cells in table: like winning team in game table , or player FG in game
+* composite key: like in player_in_teams table
+* field with a lot of Null values (like draft \ university)
+
+
+## Command Line Interface:
+
+guidelines:
+1. when user update / create table the following tables are always updated:
+    - players , teams, games
+
+2. data type arguments:
+    - user can choose to update specific **league**
+    - user can choose to update **player id_card**
+    - user can choose to update specific **seasons**
+
+3. technical parameters:
+    - insertion to table and commits intervals
+
+
+
+## TODOS and miscellaneous:
+
+1. module of constant parameters
+
+2. nodule for useful functions
+
+3. file to store information about the current data base:
+    - Last player ID
+    - last update date per league
+
+4. clean data and astype functions
+
+
