@@ -26,10 +26,13 @@ SEARCH_GAME_TEAMS_BY_CLASS = "home-game__content__result__final-score__team__pic
 SEARCH_GAME_RESULT_BY_CLASS = "home-game__content__result__final-score__score"
 GAME_NAME = 'game'
 ID_GAME_INDEX = 3
+HEADERS_TEAM_STATS = ["minuets", "2M-2A", "3M-3A", "FG%", "1M-1A", "1%", "o_r",
+                          "dr", "reb", "ast", "stl", "blk", "fo", "pts", "eff"]
 
 #Players Config
 PLAYER_PATH = PATH_ROOT + '/basketball/player/{}'
-
+PLAYER_PROFILE_CLASS = "home-player__card-identity__profil__card"
+PLAYER_INFO_CLASS = 'home-player__card-identity__profil__card__infos__entry'
 
 
 # main - user interface
@@ -51,4 +54,4 @@ HELP_STRING= '\n#---------- Hello and Welcome to the Proballers Scraper !!! ----
 # insertion to db:
 
 CHUNK = 1000
-GAME_LIMIT = None
+GAME_LIMIT = 10000
