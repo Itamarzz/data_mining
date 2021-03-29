@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 import time
 import tqdm as tq
 from config import database_config as dbcfg
-import database as db
+import db
 import re
 import pandas as pd
+import numpy as np
 
 
 # usful functions
@@ -36,8 +37,7 @@ def get_keys_from_table(table):
     """
 
     sql = f"SELECT * FROM {table}"
-    con = db.connect_sql()
-    db.execute_sql("USE proballers", con)
+    con = db.use_database()
     df = pd.read_sql(sql, con)
     if len(df) == 0:
         return []
@@ -61,6 +61,16 @@ def get_pagination(soup):
     pages = soup.find_all("a", {"class": cfg.SEARCH_PAGINATION_BY_CLASS})[-1].get_text()
 
     return int(pages)
+
+
+def get_height_in_meters(height):
+    """ convert height string to float
+    """
+
+    height_meters = height.split(" / ")[0]
+    height_meters = height_meters.replace('m', '.')
+
+    return float(height_meters)
 
 
 # seasons
@@ -181,6 +191,12 @@ def get_player_dict(player_info):
                    "height": player_info["Height"],
                    "position": player_info["Position"],
                    "nationality": player_info["Nationality"]}
+
+    height = player_dict['height']
+    if '-' == height.strip():
+        player_dict['height'] = np.nan
+    else:
+        player_dict['height'] = get_height_in_meters(height)
 
     return player_dict
 
@@ -378,7 +394,7 @@ def games_scraper(league_id, league_name, season, game_limit):
         game_ids = game_ids[: game_limit]
 
     games = {}
-    teams_games = {}
+    team_games = {}
     player_stats = []
 
     for game_id in tq.tqdm(game_ids):
@@ -389,24 +405,24 @@ def games_scraper(league_id, league_name, season, game_limit):
         games_info, team_games, player_stats_in_game = result
 
         games[game_id] = get_game_dict(league_id, season, game_id, games_info)
-        teams_games.update(team_games)
+        team_games.update(team_games)
         player_stats += player_stats_in_game
 
     return games, team_games, player_stats
 
 
-def scraper(league_no, league_name, season, games_limit=cfg.GAME_LIMIT):
-    """ scrape something """
+def scraper(league_no, league_name, season, games_limit):
+    """ Returns a dictionary where keys are table names and values are dictionaries with
+        scraped data from the proballers
+    """
 
     teams = teams_scraper(league_no, league_name, season)
     games, team_games, player_stats = games_scraper(league_no, league_name, season, games_limit)
     player_ids = set([player['player_no'] for player in player_stats])
     player_ids = remove_existing_keys('players', player_ids)
     players = players_scraper(player_ids)
+    player_stats = {key: value for key, value in enumerate(player_stats)}
+    data = {'teams': teams, 'games': games, 'team_games': team_games,
+            'players': players, 'player_stats': player_stats}
 
-    return teams, games, team_games, player_stats, players
-
-r = scraper(177, 'euroleague', 2006, 5)
-for a in r:
-    print('#####################')
-    print(a)
+    return data
