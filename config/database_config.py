@@ -18,7 +18,7 @@ PLAYER_STATS = {'team_game_id': 'str', 'player_no': 'int', 'minuets': 'int',
                 '2m': 'int', '2a': 'int', '3m': 'int', '3a': 'int', '1m': 'int',
                 '1a': 'int', 'o_r': 'int', 'dr': 'int', 'ast': 'int', 'stl': 'int',
                 'blk': 'int', 'fo': 'int', 'pts': 'int', 'eff': 'int'}
-LEAGUE_SEASONS = {'league_no' : 'int', 'season' : 'int'}
+LEAGUE_SEASONS = {'league_no': 'int', 'season': 'int'}
 
 TABLES = {'leagues': LEAGUES, 'players': PLAYERS, 'teams': TEAMS,
           'games': GAMES, 'team_games': TEAM_GAMES, 'player_stats': PLAYER_STATS}
