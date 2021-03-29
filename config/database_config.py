@@ -25,13 +25,13 @@ TABLES = {'leagues': LEAGUES, 'players': PLAYERS, 'teams': TEAMS,
 
 # SQL statements to create tables
 
-CREATE_LEAGUE_TABLE = "CREATE TABLE leagues (\
+CREATE_LEAGUE_TABLE = "CREATE TABLE IF NOT EXISTS leagues (\
               league_no int PRIMARY KEY,\
               name varchar(30),\
               url varchar(512)\
             )"
 
-CREATE_PLAYER_TABLE = "CREATE TABLE players ( \
+CREATE_PLAYER_TABLE = "CREATE TABLE IF NOT EXISTS  players ( \
               player_no int PRIMARY KEY, \
               name varchar(30),\
               date_of_birth date,\
@@ -40,27 +40,27 @@ CREATE_PLAYER_TABLE = "CREATE TABLE players ( \
               nationality varchar(60)\
             )"
 
-CREATE_TEAMS_TABLE = "CREATE TABLE teams (\
+CREATE_TEAMS_TABLE = "CREATE TABLE IF NOT EXISTS  teams (\
                 team_no int PRIMARY KEY,\
                 name varchar(30),\
                 country varchar(60)\
                 )"
 
-CREATE_LEAGUE_SEASONS = "CREATE TABLE league_seasons (\
+CREATE_LEAGUE_SEASONS = "CREATE TABLE IF NOT EXISTS  league_seasons (\
               idx int PRIMARY KEY AUTO_INCREMENT,\
               league_no int,\
               season int,\
               status varchar(20)\
             )"
 
-CREATE_GAMES_TABLE = "CREATE TABLE games (\
+CREATE_GAMES_TABLE = "CREATE TABLE IF NOT EXISTS  games (\
               game_no int PRIMARY KEY,\
               league int,\
               game_date date,\
               season int\
             )"
 
-CREATE_TEAM_GAMES_TABLE = "CREATE TABLE team_games (\
+CREATE_TEAM_GAMES_TABLE = "CREATE TABLE IF NOT EXISTS  team_games (\
                   team_game_id varchar(20) PRIMARY KEY,\
                   game_no int,\
                   team_no int,\
@@ -69,7 +69,7 @@ CREATE_TEAM_GAMES_TABLE = "CREATE TABLE team_games (\
                   home bool\
                 )"
 
-CREATE_PLAYER_STATS_TABLE = "CREATE TABLE player_stats (\
+CREATE_PLAYER_STATS_TABLE = "CREATE TABLE IF NOT EXISTS  player_stats (\
                       idx int PRIMARY KEY AUTO_INCREMENT,\
                       team_game_id varchar(20),\
                       player_no int,\
@@ -99,7 +99,7 @@ PLAYER_STATS_TEAM_GAMES_REF = """ALTER TABLE player_stats ADD FOREIGN KEY (team_
 PLAYER_STATS_PLAYERS_REF = "ALTER TABLE player_stats ADD FOREIGN KEY (player_no) REFERENCES `players` (player_no)"
 
 # Database
-CREATE_DATABASE = f"CREATE DATABASE {DATABASE_NAME}"
+CREATE_DATABASE = f"CREATE DATABASE IF NOT EXISTS  {DATABASE_NAME}"
 CREATE_REF = [GAMES_LEAGUE_REF, TEAM_GAMES_GAMES_REF, TEAM_GAMES_TEAMS_REF, PLAYER_STATS_TEAM_GAMES_REF,
               PLAYER_STATS_PLAYERS_REF]
 CREATE_TABLES = [CREATE_LEAGUE_TABLE, CREATE_PLAYER_TABLE, CREATE_TEAMS_TABLE, CREATE_LEAGUE_SEASONS,
