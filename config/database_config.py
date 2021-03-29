@@ -11,13 +11,14 @@ LEAGUES = {'league_no': 'int', 'name': 'str'}
 PLAYERS = {'player_no': 'int', 'name': 'str', 'date_of_birth': 'date',
            'height': 'float', 'position': 'str', 'nationality': 'str'}
 TEAMS = {'team_no': 'int', 'name': 'str', 'country': 'str'}
-GAMES = {'game_no': 'int', 'league': 'int', 'game_date': 'date', 'season': 'str'}
+GAMES = {'game_no': 'int', 'league': 'int', 'game_date': 'date', 'season': 'int'}
 TEAM_GAMES = {'team_game_id': 'str', 'game_no': 'int', 'team_no': 'int',
               'score': 'int', 'win': 'bool', 'home': 'bool'}
 PLAYER_STATS = {'team_game_id': 'str', 'player_no': 'int', 'minuets': 'int',
                 '2m': 'int', '2a': 'int', '3m': 'int', '3a': 'int', '1m': 'int',
                 '1a': 'int', 'o_r': 'int', 'dr': 'int', 'ast': 'int', 'stl': 'int',
                 'blk': 'int', 'fo': 'int', 'pts': 'int', 'eff': 'int'}
+LEAGUE_SEASONS = {'league_no' : 'int', 'season' : 'int'}
 
 TABLES = {'leagues': LEAGUES, 'players': PLAYERS, 'teams': TEAMS,
           'games': GAMES, 'team_games': TEAM_GAMES, 'player_stats': PLAYER_STATS}
@@ -46,9 +47,9 @@ CREATE_TEAMS_TABLE = "CREATE TABLE teams (\
                 )"
 
 CREATE_LEAGUE_SEASONS = "CREATE TABLE league_seasons (\
-              idx int PRIMARY KEY,\
+              idx int PRIMARY KEY AUTO_INCREMENT,\
               league_no int,\
-              season varchar(10),\
+              season int,\
               status varchar(20)\
             )"
 
@@ -56,7 +57,7 @@ CREATE_GAMES_TABLE = "CREATE TABLE games (\
               game_no int PRIMARY KEY,\
               league int,\
               game_date date,\
-              season varchar(10)\
+              season int\
             )"
 
 CREATE_TEAM_GAMES_TABLE = "CREATE TABLE team_games (\
