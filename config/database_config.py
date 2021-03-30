@@ -1,3 +1,5 @@
+import logging
+
 # Connection:
 
 USERNAME = 'root'
@@ -116,3 +118,10 @@ LEAGUE_SEASONS_TABLE_NAME = 'league_seasons'
 GAMES_TABLE_NAME = 'games'
 TEAM_GAMES_TABLE_NAME = 'team_games'
 PLAYER_STATS_TABLE_NAME = 'player_stats'
+
+# logger
+
+# logger
+
+LOG_FILE = 'db.log'
+MAIN_FORMATTER = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')

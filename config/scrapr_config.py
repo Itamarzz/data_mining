@@ -1,3 +1,5 @@
+import logging
+
 PATH_ROOT = "https://www.proballers.com"
 MAX_RETRIES = 5
 SILENT_MODE = False
@@ -54,3 +56,8 @@ HELP_STRING = '\n#---------- Hello and Welcome to the Proballers Scraper !!! ---
 
 CHUNK = 1000
 GAME_LIMIT = 10000
+
+# logger
+
+LOG_FILE = 'scraper.log'
+MAIN_FORMATTER = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')

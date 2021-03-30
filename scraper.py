@@ -8,6 +8,24 @@ import db
 import re
 import pandas as pd
 import numpy as np
+import logging
+
+
+# logging
+
+def set_logger():
+    """ set scraper module logger
+    """
+
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+
+    file_handler = logging.FileHandler(cfg.LOG_FILE)
+    file_handler.setFormatter(cfg.MAIN_FORMATTER)
+
+    logger.addHandler(file_handler)
+
+    return logger
 
 
 # usful functions
@@ -25,6 +43,7 @@ def get_source(url):
         time.sleep(1)
         response = requests.get(url)
         if count_retries == cfg.MAX_RETRIES:
+            scraper_logger.warning(f"page not found: {url}, response status code {response.status_code}")
             return None
 
     soup = BeautifulSoup(response.text, 'lxml')
@@ -100,6 +119,8 @@ def get_leagues():
         url = league.get('href').split("/")
         leagues_dict[url[cfg.ID_LEAGUE_INDEX]] = url[cfg.NAME_LEAGUE_INDEX]
 
+    scraper_logger.info(f'found {len(leagues_dict)} leagues to scrape')
+
     return leagues_dict
 
 
@@ -145,6 +166,8 @@ def teams_scraper(league_id, league_name, season):
     team_ids = get_teams_per_season(soup)
     team_ids = remove_existing_keys(dbcfg.TEAMS_TABLE_NAME, team_ids)
 
+    scraper_logger.info(f'found {len(team_ids)} new teams to scrape')
+
     teams_dict = {}
     for team_id in tq.tqdm(team_ids):
         url = cfg.TEAM_PATH.format(team_id)
@@ -156,6 +179,8 @@ def teams_scraper(league_id, league_name, season):
         team = get_team_details(soup)
         team["team_no"] = team_id
         teams_dict[team_id] = team
+
+    scraper_logger.info(f' {len(teams_dict)} new teams were scraped successfully')
 
     return teams_dict
 
@@ -207,6 +232,8 @@ def players_scraper(player_ids):
 
     player_ids = remove_existing_keys(dbcfg.PLAYERS_TABLE_NAME, player_ids)
 
+    scraper_logger.info(f'found {len(player_ids)} new players to scrape')
+
     players_dict = {}
 
     for player_id in tq.tqdm(player_ids):
@@ -216,10 +243,13 @@ def players_scraper(player_ids):
         try:
             player_info = get_player_details(soup)
         except AttributeError:
+            scraper_logger.warning(f'player id {player_id} was not scraped')
             continue
         player_dict = get_player_dict(player_info)
         player_dict['player_no'] = player_id
         players_dict[player_id] = player_dict
+
+    scraper_logger.info(f' {len(players_dict)} new players were scraped successfully')
 
     return players_dict
 
@@ -390,6 +420,8 @@ def games_scraper(league_id, league_name, season, game_limit):
     game_ids = get_game_ids(league_id, league_name, season, pages)
     game_ids = remove_existing_keys(dbcfg.GAMES_TABLE_NAME, game_ids)
 
+    scraper_logger.info(f' found {len(game_ids)} new games to scrape')
+
     if game_limit <= len(game_ids):
         game_ids = game_ids[: game_limit]
 
@@ -408,6 +440,10 @@ def games_scraper(league_id, league_name, season, game_limit):
         team_games.update(team_games)
         player_stats += player_stats_in_game
 
+    scraper_logger.info(f' {len(games)} new games were scraped successfully')
+    scraper_logger.info(f' {len(team_games)} new team_games were scraped successfully')
+    scraper_logger.info(f' {len(player_stats)} new player_stats were scraped successfully')
+
     return games, team_games, player_stats
 
 
@@ -425,4 +461,9 @@ def scraper(league_no, league_name, season, games_limit):
     data = {'teams': teams, 'games': games, 'team_games': team_games,
             'players': players, 'player_stats': player_stats}
 
+    scraper_logger.info(f' Scraping process is finished')
+
     return data
+
+
+scraper_logger = set_logger()
