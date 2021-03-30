@@ -130,6 +130,5 @@ This API will add information about the summary statistics of the players in the
 
 Roy & Itamar
   
-![image](https://user-images.githubusercontent.com/79038127/110879701-1a48ce00-82e6-11eb-9b5e-888867ba9d6a.png)
-![image](https://user-images.githubusercontent.com/26417538/113059450-22df4680-91b8-11eb-86b4-cb6570b0f444.png)
+![Untitled (1)](https://user-images.githubusercontent.com/26417538/113059586-4aceaa00-91b8-11eb-88b4-dd2a82a19cac.png)
 
