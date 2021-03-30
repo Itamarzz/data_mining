@@ -8,6 +8,7 @@ _**table of contents:**_
 2. List of modules
 3. How to run the code and create database
 4. Database overview
+5. API
 
 **Background:** <br>
 The Proballers website offers a worldwide data, updates and insights on basketball.
@@ -116,11 +117,19 @@ comment: some tables are small and could be merged with others but we decided to
 - team_games and games, by game_no as FK. allows to analyse teams (and player) performace in different seasons, leagues and game details.
 - team_games and teams, on team_no as FK.
 - games and leagues, on league_no as FK.
--league_season table is not linked for the use of db maintainace and retrieve list of avaiable leagues to scrap.
+- league_season table is not linked for the use of db maintainace and retrieve list of avaiable leagues to scrap.
 
 * please see full DB diagram in project folder in file "EDR Proballers.pdf" below.
+
+## API
+The API integration was performed using the following source: http://data.nba.net/ and At the moment the integration of the API is limited to the NBA league.
+This API will add information about the summary statistics of the players in the selected season and for this a new table called player_summary_season was incorporated to the database. This information contains data on: points per game, assists per game, average number of minutes a player has played per game, blocks per game, among other classic indicators of the world of basketball
+
+**Relationships between tables:**
+- player_summary_season and players, by player_no as FK.
 
 Roy & Itamar
   
 ![image](https://user-images.githubusercontent.com/79038127/110879701-1a48ce00-82e6-11eb-9b5e-888867ba9d6a.png)
+![image](https://user-images.githubusercontent.com/26417538/113059450-22df4680-91b8-11eb-86b4-cb6570b0f444.png)
 
