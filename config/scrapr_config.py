@@ -61,3 +61,5 @@ GAME_LIMIT = 10000
 
 LOG_FILE = 'scraper.log'
 MAIN_FORMATTER = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')
+
+LEAGUES_WITH_API = {"nba": "nba_api"}

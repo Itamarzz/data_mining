@@ -3,7 +3,7 @@ import logging
 # Connection:
 
 USERNAME = 'root'
-PASSWORD = 'root'
+PASSWORD = 'kakaka'
 HOST = 'localhost'
 DATABASE_NAME = 'proballers'
 
@@ -22,8 +22,13 @@ PLAYER_STATS = {'team_game_id': 'str', 'player_no': 'int', 'minuets': 'int',
                 'blk': 'int', 'fo': 'int', 'pts': 'int', 'eff': 'int'}
 LEAGUE_SEASONS = {'league_no': 'int', 'season': 'int'}
 
+PLAYER_SUMMARY_SEASON = {'player_no': 'int', 'season': 'str', 'ppg': 'str', 'rpg': 'str', 'apg': 'str', 'mpg': 'str',
+                         'topg': 'str', 'spg': 'str', 'bpg': 'str', 'tpp': 'str', 'ftp': 'str',
+                         'fgp': 'str', 'assists': 'str', 'blocks': 'str', 'steals': 'str', 'turnovers': 'str'}
+
 TABLES = {'leagues': LEAGUES, 'players': PLAYERS, 'teams': TEAMS,
-          'games': GAMES, 'team_games': TEAM_GAMES, 'player_stats': PLAYER_STATS}
+          'games': GAMES, 'team_games': TEAM_GAMES, 'player_stats': PLAYER_STATS,
+          'player_summary_season': PLAYER_SUMMARY_SEASON}
 
 # SQL statements to create tables
 
@@ -92,6 +97,26 @@ CREATE_PLAYER_STATS_TABLE = "CREATE TABLE IF NOT EXISTS  player_stats (\
                       eff int\
                       )"
 
+CREATE_PLAYER_SUMMARY_SEASON_TABLE = "CREATE TABLE IF NOT EXISTS player_summary_season (\
+                        idx int PRIMARY KEY AUTO_INCREMENT,\
+                        player_no int,\
+                        season varchar(10),\
+                        ppg varchar(10),\
+                        rpg varchar(10),\
+                        apg varchar(10),\
+                        mpg varchar(10),\
+                        topg varchar(10),\
+                        spg varchar(10),\
+                        bpg varchar(10),\
+                        tpp varchar(10),\
+                        ftp varchar(10),\
+                        fgp varchar(10),\
+                        assists varchar(10),\
+                        blocks varchar(10),\
+                        steals varchar(10),\
+                        turnovers varchar(10)\
+                      )"
+
 # Tables references
 GAMES_LEAGUE_REF = "ALTER TABLE games ADD FOREIGN KEY (league) REFERENCES leagues (league_no)"
 TEAM_GAMES_GAMES_REF = "ALTER TABLE team_games ADD FOREIGN KEY (game_no) REFERENCES games (game_no)"
@@ -99,16 +124,19 @@ TEAM_GAMES_TEAMS_REF = "ALTER TABLE team_games ADD FOREIGN KEY (team_no) REFEREN
 PLAYER_STATS_TEAM_GAMES_REF = """ALTER TABLE player_stats ADD FOREIGN KEY (team_game_id)
                                 REFERENCES team_games (team_game_id)"""
 PLAYER_STATS_PLAYERS_REF = "ALTER TABLE player_stats ADD FOREIGN KEY (player_no) REFERENCES `players` (player_no)"
+PLAYER_SUMMARY_SEASON_REF = """ALTER TABLE player_summary_season ADD FOREIGN KEY (player_no) REFERENCES `players`
+                        (player_no)"""
 
 # Database
 CREATE_DATABASE = f"CREATE DATABASE IF NOT EXISTS  {DATABASE_NAME}"
 CREATE_REF = [GAMES_LEAGUE_REF, TEAM_GAMES_GAMES_REF, TEAM_GAMES_TEAMS_REF, PLAYER_STATS_TEAM_GAMES_REF,
-              PLAYER_STATS_PLAYERS_REF]
+              PLAYER_STATS_PLAYERS_REF, PLAYER_SUMMARY_SEASON_REF]
 CREATE_TABLES = [CREATE_LEAGUE_TABLE, CREATE_PLAYER_TABLE, CREATE_TEAMS_TABLE, CREATE_LEAGUE_SEASONS,
-                 CREATE_GAMES_TABLE, CREATE_TEAM_GAMES_TABLE, CREATE_PLAYER_STATS_TABLE]
+                 CREATE_GAMES_TABLE, CREATE_TEAM_GAMES_TABLE, CREATE_PLAYER_STATS_TABLE,
+                 CREATE_PLAYER_SUMMARY_SEASON_TABLE]
 
 TABLE_KEYS = {'leagues': 'league_no', 'players': 'player_no', 'teams': 'team_no', 'league_seasons': 'idx',
-              'games': 'game_no', 'team_games': 'team_game_id', 'player_stats': 'idx'}
+              'games': 'game_no', 'team_games': 'team_game_id', 'player_stats': 'idx', 'player_summary_season': 'idx'}
 
 # Tables
 LEAGUES_TABLE_NAME = 'leagues'
@@ -118,6 +146,7 @@ LEAGUE_SEASONS_TABLE_NAME = 'league_seasons'
 GAMES_TABLE_NAME = 'games'
 TEAM_GAMES_TABLE_NAME = 'team_games'
 PLAYER_STATS_TABLE_NAME = 'player_stats'
+PLAYER_SUMMARY_SEASON_TABLE_NAME = 'player_summary_season'
 
 # logger
 

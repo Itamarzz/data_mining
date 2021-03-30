@@ -6,6 +6,7 @@ import sys
 from sqlalchemy import create_engine
 import logging
 
+
 def set_logger():
     """ set scraper module logger
     """
@@ -19,6 +20,7 @@ def set_logger():
     logger.addHandler(file_handler)
 
     return logger
+
 
 def get_df(data):
     """Returns a data frame
@@ -58,8 +60,6 @@ def insert_dict_to_df(data_dict, chunk_size):
         else:
             db_logger.info(f'no data to insert to table {table} ')
 
-
-# pymsql usful functions
 
 def connect_sql(host=dbc.HOST, user=dbc.USERNAME, password=dbc.PASSWORD):
     """ connect pymysql
@@ -113,5 +113,6 @@ def create_engine_con():
     db_logger.info(f'created engine to connect mysql successfully')
 
     return engine
+
 
 db_logger = set_logger()

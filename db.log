@@ -1,0 +1,340 @@
+2021-03-30 19:43:32,012:ERROR: connection to pymysql failed
+2021-03-30 19:46:17,446:ERROR: connection to pymysql failed
+2021-03-30 19:47:06,098:ERROR: connection to pymysql failed
+2021-03-30 19:48:00,039:ERROR: database proballers not found
+2021-03-30 19:48:34,540:INFO:connected to database proballers successfully
+2021-03-30 19:48:35,379:INFO:connected to database proballers successfully
+2021-03-30 19:49:24,889:INFO:connected to database proballers successfully
+2021-03-30 19:52:27,188:INFO:connected to database proballers successfully
+2021-03-30 19:52:27,984:INFO:connected to database proballers successfully
+2021-03-30 19:53:17,818:INFO:connected to database proballers successfully
+2021-03-30 19:53:27,931:INFO:connected to database proballers successfully
+2021-03-30 19:53:27,961:INFO:connected to database proballers successfully
+2021-03-30 19:57:12,603:INFO:created engine to connect mysql successfully
+2021-03-30 19:57:12,638:INFO:data frame of table teams has been created successfully
+2021-03-30 19:57:12,666:INFO:data type processing of table teams - success
+2021-03-30 19:57:12,725:INFO:data of teams has been inserted to db successfully
+2021-03-30 19:57:12,726:INFO:data frame of table games has been created successfully
+2021-03-30 19:57:12,814:INFO:data type processing of table games - success
+2021-03-30 19:57:12,835:INFO:data of games has been inserted to db successfully
+2021-03-30 19:57:12,836:INFO:data frame of table team_games has been created successfully
+2021-03-30 19:57:12,839:INFO:data type processing of table team_games - success
+2021-03-30 19:57:12,848:INFO:data of team_games has been inserted to db successfully
+2021-03-30 19:57:12,850:INFO:data frame of table players has been created successfully
+2021-03-30 19:57:12,874:INFO:data type processing of table players - success
+2021-03-30 19:57:12,889:INFO:data of players has been inserted to db successfully
+2021-03-30 19:57:12,893:INFO:data frame of table player_stats has been created successfully
+2021-03-30 19:57:12,899:INFO:data type processing of table player_stats - success
+2021-03-30 19:57:12,925:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 21:03:26,516:INFO:connected to database proballers successfully
+2021-03-30 21:03:27,374:INFO:connected to database proballers successfully
+2021-03-30 21:03:45,561:INFO:connected to database proballers successfully
+2021-03-30 21:03:56,141:INFO:connected to database proballers successfully
+2021-03-30 21:03:56,178:INFO:connected to database proballers successfully
+2021-03-30 21:06:04,468:INFO:created engine to connect mysql successfully
+2021-03-30 21:06:04,468:INFO:no data to insert to table teams 
+2021-03-30 21:06:04,469:INFO:data frame of table games has been created successfully
+2021-03-30 21:06:04,475:INFO:data type processing of table games - success
+2021-03-30 21:06:04,526:INFO:data of games has been inserted to db successfully
+2021-03-30 21:06:04,527:INFO:data frame of table team_games has been created successfully
+2021-03-30 21:06:04,530:INFO:data type processing of table team_games - success
+2021-03-30 21:06:04,538:INFO:data of team_games has been inserted to db successfully
+2021-03-30 21:06:04,539:INFO:data frame of table players has been created successfully
+2021-03-30 21:06:04,553:INFO:data type processing of table players - success
+2021-03-30 21:06:04,567:INFO:data of players has been inserted to db successfully
+2021-03-30 21:06:04,570:INFO:data frame of table player_stats has been created successfully
+2021-03-30 21:06:04,577:INFO:data type processing of table player_stats - success
+2021-03-30 21:06:04,601:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 21:23:37,695:INFO:connected to database proballers successfully
+2021-03-30 21:23:38,521:INFO:connected to database proballers successfully
+2021-03-30 21:24:31,254:INFO:connected to database proballers successfully
+2021-03-30 21:24:32,482:INFO:connected to database proballers successfully
+2021-03-30 21:24:32,497:INFO:connected to database proballers successfully
+2021-03-30 21:25:01,590:INFO:created engine to connect mysql successfully
+2021-03-30 21:25:01,591:INFO:data frame of table teams has been created successfully
+2021-03-30 21:25:01,593:INFO:data type processing of table teams - success
+2021-03-30 21:25:01,643:INFO:data of teams has been inserted to db successfully
+2021-03-30 21:25:01,644:INFO:data frame of table games has been created successfully
+2021-03-30 21:25:01,650:INFO:data type processing of table games - success
+2021-03-30 21:25:01,657:INFO:data of games has been inserted to db successfully
+2021-03-30 21:25:01,658:INFO:data frame of table team_games has been created successfully
+2021-03-30 21:25:01,660:INFO:data type processing of table team_games - success
+2021-03-30 21:25:01,671:INFO:data of team_games has been inserted to db successfully
+2021-03-30 21:25:01,672:INFO:data frame of table players has been created successfully
+2021-03-30 21:25:01,677:INFO:data type processing of table players - success
+2021-03-30 21:25:01,685:INFO:data of players has been inserted to db successfully
+2021-03-30 21:25:01,687:INFO:data frame of table player_stats has been created successfully
+2021-03-30 21:25:01,693:INFO:data type processing of table player_stats - success
+2021-03-30 21:25:01,705:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 21:29:01,666:INFO:connected to database proballers successfully
+2021-03-30 21:29:22,043:INFO:connected to database proballers successfully
+2021-03-30 21:29:23,178:INFO:connected to database proballers successfully
+2021-03-30 21:29:23,210:INFO:connected to database proballers successfully
+2021-03-30 21:58:04,385:INFO:connected to database proballers successfully
+2021-03-30 21:58:22,638:INFO:connected to database proballers successfully
+2021-03-30 21:58:23,715:INFO:connected to database proballers successfully
+2021-03-30 21:58:23,731:INFO:connected to database proballers successfully
+2021-03-30 23:16:01,506:INFO:connected to database proballers successfully
+2021-03-30 23:16:02,776:INFO:connected to database proballers successfully
+2021-03-30 23:16:21,216:INFO:connected to database proballers successfully
+2021-03-30 23:16:22,238:INFO:connected to database proballers successfully
+2021-03-30 23:16:22,243:INFO:connected to database proballers successfully
+2021-03-30 23:34:54,244:INFO:connected to database proballers successfully
+2021-03-30 23:34:55,067:INFO:connected to database proballers successfully
+2021-03-30 23:35:47,479:INFO:connected to database proballers successfully
+2021-03-30 23:35:48,597:INFO:connected to database proballers successfully
+2021-03-30 23:35:48,605:INFO:connected to database proballers successfully
+2021-03-30 23:36:24,747:INFO:created engine to connect mysql successfully
+2021-03-30 23:36:24,748:INFO:data frame of table teams has been created successfully
+2021-03-30 23:36:24,750:INFO:data type processing of table teams - success
+2021-03-30 23:36:24,780:INFO:data of teams has been inserted to db successfully
+2021-03-30 23:36:24,781:INFO:data frame of table games has been created successfully
+2021-03-30 23:36:24,786:INFO:data type processing of table games - success
+2021-03-30 23:36:24,794:INFO:data of games has been inserted to db successfully
+2021-03-30 23:36:24,797:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:36:24,799:INFO:data type processing of table team_games - success
+2021-03-30 23:36:24,807:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:36:24,809:INFO:data frame of table players has been created successfully
+2021-03-30 23:36:24,816:INFO:data type processing of table players - success
+2021-03-30 23:36:24,826:INFO:data of players has been inserted to db successfully
+2021-03-30 23:36:24,831:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:36:24,838:INFO:data type processing of table player_stats - success
+2021-03-30 23:36:24,851:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:36:24,853:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:39:09,811:INFO:connected to database proballers successfully
+2021-03-30 23:39:10,666:INFO:connected to database proballers successfully
+2021-03-30 23:39:29,139:INFO:connected to database proballers successfully
+2021-03-30 23:39:30,150:INFO:connected to database proballers successfully
+2021-03-30 23:39:30,166:INFO:connected to database proballers successfully
+2021-03-30 23:40:01,693:INFO:created engine to connect mysql successfully
+2021-03-30 23:40:01,693:INFO:no data to insert to table teams 
+2021-03-30 23:40:01,694:INFO:data frame of table games has been created successfully
+2021-03-30 23:40:01,699:INFO:data type processing of table games - success
+2021-03-30 23:40:01,748:INFO:data of games has been inserted to db successfully
+2021-03-30 23:40:01,750:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:40:01,753:INFO:data type processing of table team_games - success
+2021-03-30 23:40:01,761:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:40:01,762:INFO:data frame of table players has been created successfully
+2021-03-30 23:40:01,767:INFO:data type processing of table players - success
+2021-03-30 23:40:01,777:INFO:data of players has been inserted to db successfully
+2021-03-30 23:40:01,779:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:40:01,786:INFO:data type processing of table player_stats - success
+2021-03-30 23:40:01,797:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:40:01,799:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:40:01,843:INFO:data type processing of table player_summary_season - success
+2021-03-30 23:40:01,855:INFO:data of player_summary_season has been inserted to db successfully
+2021-03-30 23:40:47,265:INFO:connected to database proballers successfully
+2021-03-30 23:40:48,089:INFO:connected to database proballers successfully
+2021-03-30 23:41:07,147:INFO:connected to database proballers successfully
+2021-03-30 23:41:08,230:INFO:connected to database proballers successfully
+2021-03-30 23:41:08,236:INFO:connected to database proballers successfully
+2021-03-30 23:41:38,233:INFO:created engine to connect mysql successfully
+2021-03-30 23:41:38,233:INFO:no data to insert to table teams 
+2021-03-30 23:41:38,234:INFO:data frame of table games has been created successfully
+2021-03-30 23:41:38,241:INFO:data type processing of table games - success
+2021-03-30 23:41:38,285:INFO:data of games has been inserted to db successfully
+2021-03-30 23:41:38,286:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:41:38,289:INFO:data type processing of table team_games - success
+2021-03-30 23:41:38,297:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:41:38,299:INFO:data frame of table players has been created successfully
+2021-03-30 23:41:38,304:INFO:data type processing of table players - success
+2021-03-30 23:41:38,313:INFO:data of players has been inserted to db successfully
+2021-03-30 23:41:38,316:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:41:38,323:INFO:data type processing of table player_stats - success
+2021-03-30 23:41:38,334:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:41:38,336:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:42:16,949:INFO:connected to database proballers successfully
+2021-03-30 23:42:17,758:INFO:connected to database proballers successfully
+2021-03-30 23:42:35,962:INFO:connected to database proballers successfully
+2021-03-30 23:42:37,016:INFO:connected to database proballers successfully
+2021-03-30 23:42:37,031:INFO:connected to database proballers successfully
+2021-03-30 23:43:04,169:INFO:created engine to connect mysql successfully
+2021-03-30 23:43:04,169:INFO:no data to insert to table teams 
+2021-03-30 23:43:04,170:INFO:data frame of table games has been created successfully
+2021-03-30 23:43:04,175:INFO:data type processing of table games - success
+2021-03-30 23:43:04,222:INFO:data of games has been inserted to db successfully
+2021-03-30 23:43:04,223:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:43:04,225:INFO:data type processing of table team_games - success
+2021-03-30 23:43:04,234:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:43:04,235:INFO:data frame of table players has been created successfully
+2021-03-30 23:43:04,240:INFO:data type processing of table players - success
+2021-03-30 23:43:04,249:INFO:data of players has been inserted to db successfully
+2021-03-30 23:43:04,252:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:43:04,258:INFO:data type processing of table player_stats - success
+2021-03-30 23:43:04,269:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:43:04,271:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:43:04,278:INFO:data type processing of table player_summary_season - success
+2021-03-30 23:43:04,289:INFO:data of player_summary_season has been inserted to db successfully
+2021-03-30 23:45:27,822:INFO:connected to database proballers successfully
+2021-03-30 23:45:28,662:INFO:connected to database proballers successfully
+2021-03-30 23:45:47,517:INFO:connected to database proballers successfully
+2021-03-30 23:45:48,746:INFO:connected to database proballers successfully
+2021-03-30 23:45:48,777:INFO:connected to database proballers successfully
+2021-03-30 23:46:20,209:INFO:created engine to connect mysql successfully
+2021-03-30 23:46:20,209:INFO:no data to insert to table teams 
+2021-03-30 23:46:20,210:INFO:data frame of table games has been created successfully
+2021-03-30 23:46:20,216:INFO:data type processing of table games - success
+2021-03-30 23:46:20,254:INFO:data of games has been inserted to db successfully
+2021-03-30 23:46:20,255:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:46:20,257:INFO:data type processing of table team_games - success
+2021-03-30 23:46:20,266:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:46:20,267:INFO:data frame of table players has been created successfully
+2021-03-30 23:46:20,272:INFO:data type processing of table players - success
+2021-03-30 23:46:20,283:INFO:data of players has been inserted to db successfully
+2021-03-30 23:46:20,285:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:46:20,292:INFO:data type processing of table player_stats - success
+2021-03-30 23:46:20,304:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:46:20,305:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:47:24,976:INFO:connected to database proballers successfully
+2021-03-30 23:47:25,814:INFO:connected to database proballers successfully
+2021-03-30 23:47:43,023:INFO:connected to database proballers successfully
+2021-03-30 23:47:44,022:INFO:connected to database proballers successfully
+2021-03-30 23:47:44,028:INFO:connected to database proballers successfully
+2021-03-30 23:48:07,984:INFO:created engine to connect mysql successfully
+2021-03-30 23:48:07,984:INFO:no data to insert to table teams 
+2021-03-30 23:48:07,985:INFO:data frame of table games has been created successfully
+2021-03-30 23:48:07,990:INFO:data type processing of table games - success
+2021-03-30 23:48:08,026:INFO:data of games has been inserted to db successfully
+2021-03-30 23:48:08,027:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:48:08,030:INFO:data type processing of table team_games - success
+2021-03-30 23:48:08,039:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:48:08,041:INFO:data frame of table players has been created successfully
+2021-03-30 23:48:08,045:INFO:data type processing of table players - success
+2021-03-30 23:48:08,056:INFO:data of players has been inserted to db successfully
+2021-03-30 23:48:08,059:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:48:08,066:INFO:data type processing of table player_stats - success
+2021-03-30 23:48:08,077:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:48:08,079:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:49:06,456:INFO:connected to database proballers successfully
+2021-03-30 23:49:07,226:INFO:connected to database proballers successfully
+2021-03-30 23:49:26,217:INFO:connected to database proballers successfully
+2021-03-30 23:49:27,273:INFO:connected to database proballers successfully
+2021-03-30 23:49:27,304:INFO:connected to database proballers successfully
+2021-03-30 23:50:00,017:INFO:created engine to connect mysql successfully
+2021-03-30 23:50:00,017:INFO:no data to insert to table teams 
+2021-03-30 23:50:00,018:INFO:data frame of table games has been created successfully
+2021-03-30 23:50:00,025:INFO:data type processing of table games - success
+2021-03-30 23:50:00,077:INFO:data of games has been inserted to db successfully
+2021-03-30 23:50:00,078:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:50:00,080:INFO:data type processing of table team_games - success
+2021-03-30 23:50:00,089:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:50:00,090:INFO:data frame of table players has been created successfully
+2021-03-30 23:50:00,095:INFO:data type processing of table players - success
+2021-03-30 23:50:00,105:INFO:data of players has been inserted to db successfully
+2021-03-30 23:50:00,108:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:50:00,114:INFO:data type processing of table player_stats - success
+2021-03-30 23:50:00,125:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:50:00,127:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:52:02,847:INFO:connected to database proballers successfully
+2021-03-30 23:52:03,625:INFO:connected to database proballers successfully
+2021-03-30 23:52:23,149:INFO:connected to database proballers successfully
+2021-03-30 23:52:24,243:INFO:connected to database proballers successfully
+2021-03-30 23:52:24,274:INFO:connected to database proballers successfully
+2021-03-30 23:52:56,715:INFO:created engine to connect mysql successfully
+2021-03-30 23:52:56,716:INFO:no data to insert to table teams 
+2021-03-30 23:52:56,717:INFO:data frame of table games has been created successfully
+2021-03-30 23:52:56,723:INFO:data type processing of table games - success
+2021-03-30 23:52:56,746:INFO:data of games has been inserted to db successfully
+2021-03-30 23:52:56,747:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:52:56,750:INFO:data type processing of table team_games - success
+2021-03-30 23:52:56,758:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:52:56,761:INFO:data frame of table players has been created successfully
+2021-03-30 23:52:56,768:INFO:data type processing of table players - success
+2021-03-30 23:52:56,778:INFO:data of players has been inserted to db successfully
+2021-03-30 23:52:56,780:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:52:56,786:INFO:data type processing of table player_stats - success
+2021-03-30 23:52:56,799:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:52:56,801:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:53:19,640:INFO:connected to database proballers successfully
+2021-03-30 23:53:20,742:INFO:connected to database proballers successfully
+2021-03-30 23:53:39,390:INFO:connected to database proballers successfully
+2021-03-30 23:53:40,445:INFO:connected to database proballers successfully
+2021-03-30 23:53:40,475:INFO:connected to database proballers successfully
+2021-03-30 23:54:11,864:INFO:created engine to connect mysql successfully
+2021-03-30 23:54:11,864:INFO:no data to insert to table teams 
+2021-03-30 23:54:11,865:INFO:data frame of table games has been created successfully
+2021-03-30 23:54:11,871:INFO:data type processing of table games - success
+2021-03-30 23:54:11,913:INFO:data of games has been inserted to db successfully
+2021-03-30 23:54:11,914:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:54:11,916:INFO:data type processing of table team_games - success
+2021-03-30 23:54:11,924:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:54:11,925:INFO:data frame of table players has been created successfully
+2021-03-30 23:54:11,931:INFO:data type processing of table players - success
+2021-03-30 23:54:11,938:INFO:data of players has been inserted to db successfully
+2021-03-30 23:54:11,940:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:54:11,946:INFO:data type processing of table player_stats - success
+2021-03-30 23:54:11,956:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:54:11,958:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:57:19,629:INFO:connected to database proballers successfully
+2021-03-30 23:57:20,472:INFO:connected to database proballers successfully
+2021-03-30 23:58:10,980:INFO:connected to database proballers successfully
+2021-03-30 23:58:12,061:INFO:connected to database proballers successfully
+2021-03-30 23:58:12,066:INFO:connected to database proballers successfully
+2021-03-30 23:58:45,264:INFO:created engine to connect mysql successfully
+2021-03-30 23:58:45,265:INFO:data frame of table teams has been created successfully
+2021-03-30 23:58:45,267:INFO:data type processing of table teams - success
+2021-03-30 23:58:45,309:INFO:data of teams has been inserted to db successfully
+2021-03-30 23:58:45,310:INFO:data frame of table games has been created successfully
+2021-03-30 23:58:45,315:INFO:data type processing of table games - success
+2021-03-30 23:58:45,322:INFO:data of games has been inserted to db successfully
+2021-03-30 23:58:45,323:INFO:data frame of table team_games has been created successfully
+2021-03-30 23:58:45,325:INFO:data type processing of table team_games - success
+2021-03-30 23:58:45,334:INFO:data of team_games has been inserted to db successfully
+2021-03-30 23:58:45,336:INFO:data frame of table players has been created successfully
+2021-03-30 23:58:45,340:INFO:data type processing of table players - success
+2021-03-30 23:58:45,349:INFO:data of players has been inserted to db successfully
+2021-03-30 23:58:45,352:INFO:data frame of table player_stats has been created successfully
+2021-03-30 23:58:45,358:INFO:data type processing of table player_stats - success
+2021-03-30 23:58:45,370:INFO:data of player_stats has been inserted to db successfully
+2021-03-30 23:58:45,372:INFO:data frame of table player_summary_season has been created successfully
+2021-03-30 23:58:45,375:INFO:data type processing of table player_summary_season - success
+2021-03-30 23:58:45,388:INFO:data of player_summary_season has been inserted to db successfully
+2021-03-30 23:59:08,008:INFO:connected to database proballers successfully
+2021-03-30 23:59:08,802:INFO:connected to database proballers successfully
+2021-03-30 23:59:34,476:INFO:connected to database proballers successfully
+2021-03-30 23:59:35,472:INFO:connected to database proballers successfully
+2021-03-30 23:59:35,487:INFO:connected to database proballers successfully
+2021-03-31 00:00:56,143:INFO:connected to database proballers successfully
+2021-03-31 00:01:25,360:INFO:connected to database proballers successfully
+2021-03-31 00:01:26,171:INFO:connected to database proballers successfully
+2021-03-31 00:01:52,722:INFO:connected to database proballers successfully
+2021-03-31 00:01:53,795:INFO:connected to database proballers successfully
+2021-03-31 00:01:53,826:INFO:connected to database proballers successfully
+2021-03-31 00:02:20,851:INFO:created engine to connect mysql successfully
+2021-03-31 00:02:20,852:INFO:data frame of table teams has been created successfully
+2021-03-31 00:02:20,853:INFO:data type processing of table teams - success
+2021-03-31 00:02:20,901:INFO:data of teams has been inserted to db successfully
+2021-03-31 00:02:20,902:INFO:data frame of table games has been created successfully
+2021-03-31 00:02:20,907:INFO:data type processing of table games - success
+2021-03-31 00:02:20,915:INFO:data of games has been inserted to db successfully
+2021-03-31 00:02:20,916:INFO:data frame of table team_games has been created successfully
+2021-03-31 00:02:20,918:INFO:data type processing of table team_games - success
+2021-03-31 00:02:20,927:INFO:data of team_games has been inserted to db successfully
+2021-03-31 00:02:20,928:INFO:data frame of table players has been created successfully
+2021-03-31 00:02:20,933:INFO:data type processing of table players - success
+2021-03-31 00:02:20,942:INFO:data of players has been inserted to db successfully
+2021-03-31 00:02:20,944:INFO:data frame of table player_stats has been created successfully
+2021-03-31 00:02:20,950:INFO:data type processing of table player_stats - success
+2021-03-31 00:02:20,961:INFO:data of player_stats has been inserted to db successfully
+2021-03-31 00:02:38,288:INFO:connected to database proballers successfully
+2021-03-31 00:02:39,032:INFO:connected to database proballers successfully
+2021-03-31 00:02:54,408:INFO:connected to database proballers successfully
+2021-03-31 00:02:55,374:INFO:connected to database proballers successfully
+2021-03-31 00:02:55,379:INFO:connected to database proballers successfully
+2021-03-31 00:03:22,053:INFO:created engine to connect mysql successfully
+2021-03-31 00:03:22,053:INFO:no data to insert to table teams 
+2021-03-31 00:03:22,054:INFO:data frame of table games has been created successfully
+2021-03-31 00:03:22,061:INFO:data type processing of table games - success
+2021-03-31 00:03:22,084:INFO:data of games has been inserted to db successfully
+2021-03-31 00:03:22,085:INFO:data frame of table team_games has been created successfully
+2021-03-31 00:03:22,088:INFO:data type processing of table team_games - success
+2021-03-31 00:03:22,097:INFO:data of team_games has been inserted to db successfully
+2021-03-31 00:03:22,099:INFO:data frame of table players has been created successfully
+2021-03-31 00:03:22,104:INFO:data type processing of table players - success
+2021-03-31 00:03:22,115:INFO:data of players has been inserted to db successfully
+2021-03-31 00:03:22,117:INFO:data frame of table player_stats has been created successfully
+2021-03-31 00:03:22,124:INFO:data type processing of table player_stats - success
+2021-03-31 00:03:22,136:INFO:data of player_stats has been inserted to db successfully
+2021-03-31 00:03:22,139:INFO:data frame of table player_summary_season has been created successfully
+2021-03-31 00:03:22,143:INFO:data type processing of table player_summary_season - success
+2021-03-31 00:03:22,154:INFO:data of player_summary_season has been inserted to db successfully

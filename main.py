@@ -2,6 +2,7 @@ import sys
 import config.scrapr_config as cfg
 import argparse
 import scraper
+import api
 import db
 
 
@@ -116,6 +117,11 @@ def main():
 
             db.use_database()
             data = scraper.scraper(league_no, league_name, season, games_limit)
+
+            if league_name in cfg.LEAGUES_WITH_API:
+                data_api = api.api(league_name, season, data["players"])
+                if data_api:
+                    data.update(data_api)
             db.insert_dict_to_df(data, chunk_size)
 
     except ValueError as ex:
