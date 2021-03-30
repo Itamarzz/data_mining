@@ -19,18 +19,21 @@ The data is stored in a database which can be created with its table easily.
 
 ## 2. List of modules:
 
-_scraping modules:_<br>
+_scraper:_ with 4 major functions:<br>
 
-- players: scrape players profiles to create players table.
-- teams: scrape team pages to create teams table.
-- games: scrape league schedules per season to create games table and player stats tables.
-- leagues: scrape the home page to create leagues table and get list of available leagues to scrpae.
-- database: create database with its tables
+    - scrape_players: scrape players profiles to create players table.
+    - scrape_teams: scrape team pages to create teams table.
+    - scrape_games: scrape league schedules per season to create games table and player stats tables.
+    - scrape_leagues: scrape the home page to create leagues table and get list of available leagues to scrpae.
+
+- _Database modueles:_ <br>
+
+    - db: responsible for data insertion to database.
+    - create_database: a standalone module to create database with its tables. Use this module only once to initial database.
 
 _configuration and maitenance:_
-- usfull functions: methods that are used by the other modules.
-- scraper_config: maitain constants, tags, labels etc.
-- database_config: config module for database creation and usages
+    - scraper_config: maitain constants, tags, labels etc.
+    - database_config: config module for database creation and usages
 
 main: responsible for the interaction with user, validate input and use the other modules.
 
@@ -68,16 +71,16 @@ _**execute examples arguments:**_<br>
 _**Create and use Database:**_:<br>
 
 - The scraper saves scrapped data into a database according to the schema (see on database section).
-- The database.py module enables to create a new database with all its tables.<br>
+- The create_database.py module enables to create a new database with all its tables.<br>
 
-**Todo before running the scraper:**
+**Todo before using the scraper:**
 - update database configuration file with your credentials:
     1. go to the folder database config
     2. in the same directory create a copy of the file database_config_copy and
     rename it to be database_config.py.
     3. in the new file "database_config.py" update your sql credentials. it's in the top of the page.
 
-- create database according to schema below. this can be done running the file "database.py". it will create new database named "proballers".
+- create database according to schema below. this can be done running the file "create_database.py". it will create new database named "proballers".
 - if you already have database with this name you can choose another name by changing the DATABASE_NAME constant in the database_config.py file.
    
 <br>
