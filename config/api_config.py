@@ -22,5 +22,5 @@ API_NBA_SEASON_YEAR = "seasonYear"
 API_NBA_PLAYERS_INFO_COLUMNS = {'ppg', 'rpg', 'apg', 'mpg', 'topg', 'spg', 'bpg', 'tpp', 'ftp', 'fgp', 'assists',
                                 'blocks', 'steals', 'turnovers'}
 
-LOG_FILE = 'scraper.log'
+LOG_FILE = 'api.log'
 MAIN_FORMATTER = logging.Formatter('%(asctime)s:%(levelname)s:%(message)s')

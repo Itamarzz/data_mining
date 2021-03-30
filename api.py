@@ -8,7 +8,7 @@ import logging
 
 
 def set_logger():
-    """ set scraper module logger
+    """ set api module logger
     """
 
     logger = logging.getLogger(__name__)
@@ -57,15 +57,13 @@ def get_data_player_api(data):
     return players_api_list
 
 
-def inner_join_dict(dict1, dict2):
+def inner_join_dict(players_api, player_scrapper):
     """Returns a dict after delete players who are not in the scrapper"""
 
     dict_result = {}
-    for key in dict1.keys():
-        if key in dict2.keys():
-            dict_result[dict2[key]] = dict1[key]
-        else:
-            api_logger.warning(f'player {key} was not found')
+    for key in players_api.keys():
+        if key in player_scrapper.keys():
+            dict_result[player_scrapper[key]] = players_api[key]
     return dict_result
 
 
@@ -101,11 +99,13 @@ def get_players_info(players_api_ids, season):
         except AttributeError:
             api_logger.warning(f'player id {player_no} was not found in api')
             continue
+
         if player_info:
             player_info["season"] = season
             player_info['player_no'] = player_no
             players_dict[player_no] = player_info
 
+    api_logger.info(f' {len(players_dict)} new players stats were get successfully')
     return players_dict
 
 
@@ -140,7 +140,7 @@ LEAGUES_API = {
 
 
 def api(league, season, players):
-    """ Returns a dictionary corresponding api. For the moment, just nba
+    """ Returns a dictionary from corresponding api. For the moment, just nba
     """
     api_logger.info(f'api process is finished')
     data = LEAGUES_API[league](season, players)
