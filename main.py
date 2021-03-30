@@ -118,7 +118,6 @@ def main():
             data = scraper.scraper(league_no, league_name, season, games_limit)
             db.insert_dict_to_df(data, chunk_size)
 
-
     except ValueError as ex:
         print(f'ERROR: Invalid input: {ex}\nFor proper usage:\n{cfg.HELP_STRING}', )
     else:

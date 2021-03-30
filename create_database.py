@@ -53,10 +53,7 @@ def use_database(databaseto_use=dbcfg.DATABASE_NAME):
     return con
 
 
-
 create_db()
-
-
 
 # TESTS
 

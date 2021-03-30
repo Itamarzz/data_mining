@@ -88,4 +88,3 @@ def create_engine_con():
                                    db=dbcfg.DATABASE_NAME))
 
     return engine
-
