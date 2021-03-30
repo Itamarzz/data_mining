@@ -122,9 +122,13 @@ comment: some tables are small and could be merged with others but we decided to
 * please see full DB diagram in project folder in file "EDR Proballers.pdf" below.
 
 ## API
-The API integration was performed using the following source: http://data.nba.net/ and At the moment the integration of the API is limited to the NBA league.
-This API will add information about the summary statistics of the players in the selected season and for this a new table called player_summary_season was incorporated to the database. This information contains data on: points per game, assists per game, average number of minutes a player has played per game, blocks per game, among other classic indicators of the world of basketball
+The API integration was performed using the following source: http://data.nba.net/ and at the moment the integration of the API is limited to the NBA league.
+This API adds information about the summary statistics of the players in the selected season and for this a new table called player_summary_season was incorporated to the database. This information contains data on: points per game, assists per game, average number of minutes a player has played per game, blocks per game, among other classic indicators of the world of basketball.
 
+This integration adds a new module:
+
+ - api: get data players from http://data.nba.net/
+ - 
 **Relationships between tables:**
 - player_summary_season and players, by player_no as FK.
 
