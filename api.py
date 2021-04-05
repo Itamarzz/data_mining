@@ -5,6 +5,10 @@ import config.scrapr_config as cfg
 import config.api_config as apicfg
 import tqdm as tq
 import logging
+import db
+import pandas as pd
+
+# useful functions
 
 
 def set_logger():
@@ -20,6 +24,20 @@ def set_logger():
     logger.addHandler(file_handler)
 
     return logger
+
+
+def remove_existing_keys(players, season):
+    """ returns a list of unique players to scrape from api
+    """
+
+    summary_df = get_table_from_db('player_summary_season')
+    if summary_df.empty:
+        return players
+    else:
+        filt = summary_df['season'] == str(season)
+        existing_players = summary_df.loc[filt, 'player_no'].tolist()
+        players_to_scrape = [x for x in players if x not in existing_players]
+        return players_to_scrape
 
 
 def get_source(url):
@@ -42,12 +60,31 @@ def get_source(url):
     return data
 
 
+def get_table_from_db(table):
+    """ returns df as a result of sql select query
+    """
+
+    sql = f"SELECT * FROM {table}"
+    con = db.use_database()
+    df = pd.read_sql(sql, con)
+
+    return df
+
+
 def get_data_player_scraper(players):
     """Returns a dict with player name and player id """
 
-    players_list = {value["name"]: value["player_no"] for key, value in players.items()}
-    return players_list
+    players_dict = {}
+    players_df = get_table_from_db('players')
+    filt = players_df['player_no'].isin(players)
+    players_list = players_df.loc[filt, ['name', 'player_no']].to_dict('records')
 
+    for p in players_list:
+        players_dict[p['name']] = p['player_no']
+
+    return players_dict
+
+# scraper
 
 def get_data_player_api(data):
     """Returns a dictionary where the key is player name and the value is player id from the API data"""
@@ -119,6 +156,7 @@ def get_player_ids_data(season, players):
         return None
 
     players_ids_scraper = get_data_player_scraper(players)
+    print(players_ids_scraper)
     players_ids_api = get_data_player_api(data[apicfg.API_NBA_JSON_KEY_1][apicfg.API_NBA_JSON_KEY_2])
     players_ids = inner_join_dict(players_ids_api, players_ids_scraper)
 
@@ -130,6 +168,7 @@ def nba_api_scraper(season, players):
         nba api information
     """
 
+    players = remove_existing_keys(players, season)
     player_ids = get_player_ids_data(season, players)
     if player_ids:
         players_info = get_players_info(player_ids, season)
