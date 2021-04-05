@@ -35,7 +35,7 @@ def remove_existing_keys(players, season):
     if summary_df.empty:
         return players
     else:
-        filt = summary_df['season'] == str(season)
+        filt = summary_df['season'] == season
         existing_players = summary_df.loc[filt, 'player_no'].tolist()
         players_to_scrape = [x for x in players if x not in existing_players]
         return players_to_scrape

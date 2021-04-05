@@ -22,9 +22,10 @@ PLAYER_STATS = {'team_game_id': 'str', 'player_no': 'int', 'minuets': 'int',
                 'blk': 'int', 'fo': 'int', 'pts': 'int', 'eff': 'int'}
 LEAGUE_SEASONS = {'league_no': 'int', 'season': 'int'}
 
-PLAYER_SUMMARY_SEASON = {'ppg': 'str', 'rpg': 'str', 'apg': 'str', 'mpg': 'str',
-                         'topg': 'str', 'spg': 'str', 'bpg': 'str', 'tpp': 'str', 'ftp': 'str',
-                         'fgp': 'str', 'assists': 'str', 'blocks': 'str', 'steals': 'str', 'turnovers': 'str'}
+PLAYER_SUMMARY_SEASON = {'player_no': 'int', 'season': 'int', 'ppg': 'float', 'rpg': 'float', 'apg': 'float',
+                         'mpg': 'float', 'topg': 'float', 'spg': 'float', 'bpg': 'float', 'tpp': 'float',
+                         'ftp': 'float', 'fgp': 'float', 'assists': 'int', 'blocks': 'int', 'steals': 'int',
+                         'turnovers': 'int'}
 
 TABLES = {'leagues': LEAGUES, 'players': PLAYERS, 'teams': TEAMS,
           'games': GAMES, 'team_games': TEAM_GAMES, 'player_stats': PLAYER_STATS,
@@ -100,21 +101,21 @@ CREATE_PLAYER_STATS_TABLE = "CREATE TABLE IF NOT EXISTS  player_stats (\
 CREATE_PLAYER_SUMMARY_SEASON_TABLE = "CREATE TABLE IF NOT EXISTS player_summary_season (\
                         idx int PRIMARY KEY AUTO_INCREMENT,\
                         player_no int,\
-                        season varchar(10),\
-                        ppg varchar(10),\
-                        rpg varchar(10),\
-                        apg varchar(10),\
-                        mpg varchar(10),\
-                        topg varchar(10),\
-                        spg varchar(10),\
-                        bpg varchar(10),\
-                        tpp varchar(10),\
-                        ftp varchar(10),\
-                        fgp varchar(10),\
-                        assists varchar(10),\
-                        blocks varchar(10),\
-                        steals varchar(10),\
-                        turnovers varchar(10)\
+                        season int,\
+                        ppg float,\
+                        rpg float,\
+                        apg float,\
+                        mpg float,\
+                        topg float,\
+                        spg float,\
+                        bpg float,\
+                        tpp float,\
+                        ftp float,\
+                        fgp float,\
+                        assists int,\
+                        blocks int,\
+                        steals int,\
+                        turnovers int\
                       )"
 
 # Tables references
