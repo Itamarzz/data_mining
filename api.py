@@ -50,7 +50,7 @@ def get_data_player_scraper(players):
 
 
 def get_data_player_api(data):
-    """Returns a dict after join two columns in two columns """
+    """Returns a dictionary where the key is player name and the value is player id from the API data"""
 
     players_api_list = {values[apicfg.API_CREATE_NAME_1] + " " +
                         values[apicfg.API_CREATE_NAME_2]: values[apicfg.API_NBA_PLAYER_ID] for values in data}
@@ -58,7 +58,7 @@ def get_data_player_api(data):
 
 
 def inner_join_dict(players_api, player_scrapper):
-    """Returns a dict after delete players who are not in the scrapper"""
+    """Returns a dictionary where the key is player name and values of player id (from API), player_no in the db """
 
     dict_result = {}
     for key in players_api.keys():
@@ -68,7 +68,7 @@ def inner_join_dict(players_api, player_scrapper):
 
 
 def get_player_details(data, season):
-    """Returns a dict with player details"""
+    """Returns a dictionary with the players stats of specific season """
 
     player_detail_dict = [value[apicfg.API_NBA_PLAYERS_INFO_KEY] for value in data
                           if value[apicfg.API_NBA_SEASON_YEAR] == int(season)]
@@ -115,6 +115,9 @@ def get_player_ids_data(season, players):
     url = apicfg.NBA_URL_TEAMS_API.format(season)
     data = get_source(url)
 
+    if not data:
+        return None
+
     players_ids_scraper = get_data_player_scraper(players)
     players_ids_api = get_data_player_api(data[apicfg.API_NBA_JSON_KEY_1][apicfg.API_NBA_JSON_KEY_2])
     players_ids = inner_join_dict(players_ids_api, players_ids_scraper)
@@ -122,20 +125,23 @@ def get_player_ids_data(season, players):
     return players_ids
 
 
-def nba_api(season, players):
+def nba_api_scraper(season, players):
     """ Returns a dictionary where key is a table names and values are dictionaries with
         nba api information
     """
 
     player_ids = get_player_ids_data(season, players)
-    players_info = get_players_info(player_ids, season)
+    if player_ids:
+        players_info = get_players_info(player_ids, season)
+        data = {"player_summary_season": players_info}
+    else:
+        data = {"player_summary_season": {}}
 
-    data = {"player_summary_season": players_info}
     return data
 
 
 LEAGUES_API = {
-    "nba": nba_api
+    "nba": nba_api_scraper
 }
 
 
