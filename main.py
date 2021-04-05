@@ -117,12 +117,11 @@ def main():
 
             db.use_database()
             data, players = scraper.scraper(league_no, league_name, season, games_limit)
+            db.insert_dict_to_df(data, chunk_size)
 
             if league_name in cfg.LEAGUES_WITH_API:
                 data_api = api.api(league_name, season, players)
-                if data_api:
-                    data.update(data_api)
-            db.insert_dict_to_df(data, chunk_size)
+                db.insert_dict_to_df(data_api, chunk_size)
 
     except ValueError as ex:
         print(f'ERROR: Invalid input: {ex}\nFor proper usage:\n{cfg.HELP_STRING}', )
