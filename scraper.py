@@ -434,10 +434,10 @@ def games_scraper(league_id, league_name, season, game_limit):
         except AttributeError:
             continue
 
-        games_info, team_games, player_stats_in_game = result
+        games_info, tg, player_stats_in_game = result
 
         games[game_id] = get_game_dict(league_id, season, game_id, games_info)
-        team_games.update(team_games)
+        team_games.update(tg)
         player_stats += player_stats_in_game
 
     scraper_logger.info(f' {len(games)} new games were scraped successfully')
