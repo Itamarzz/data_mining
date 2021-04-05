@@ -180,7 +180,6 @@ def teams_scraper(league_id, league_name, season):
         team["team_no"] = team_id
         teams_dict[team_id] = team
 
-
     scraper_logger.info(f' {len(teams_dict)} new teams were scraped successfully')
 
     return teams_dict
@@ -456,15 +455,15 @@ def scraper(league_no, league_name, season, games_limit):
     teams = teams_scraper(league_no, league_name, season)
     games, team_games, player_stats = games_scraper(league_no, league_name, season, games_limit)
     player_ids = set([player['player_no'] for player in player_stats])
-    player_ids = remove_existing_keys('players', player_ids)
-    players = players_scraper(player_ids)
+    player_ids_to_scrape = remove_existing_keys('players', player_ids)
+    players = players_scraper(player_ids_to_scrape)
     player_stats = {key: value for key, value in enumerate(player_stats)}
     data = {'teams': teams, 'games': games, 'team_games': team_games,
             'players': players, 'player_stats': player_stats}
 
     scraper_logger.info(f' Scraping process is finished')
 
-    return data
+    return data, player_ids
 
 
 scraper_logger = set_logger()
