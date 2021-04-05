@@ -116,10 +116,10 @@ def main():
             league_no, league_name, season, chunk_size, games_limit = validate_input(args, available_leagues)
 
             db.use_database()
-            data = scraper.scraper(league_no, league_name, season, games_limit)
+            data, players = scraper.scraper(league_no, league_name, season, games_limit)
 
             if league_name in cfg.LEAGUES_WITH_API:
-                data_api = api.api(league_name, season, data["players"])
+                data_api = api.api(league_name, season, players)
                 if data_api:
                     data.update(data_api)
             db.insert_dict_to_df(data, chunk_size)
