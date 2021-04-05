@@ -135,7 +135,7 @@ def get_players_info(players_api_ids, season):
                                              [apicfg.API_NBA_PLAYERS_JSON_KEY_3][apicfg.API_NBA_PLAYERS_JSON_KEY_4]
                                              [apicfg.API_NBA_PLAYERS_JSON_KEY_5], season)
 
-        except AttributeError:
+        except (AttributeError, KeyError):
             api_logger.warning(f'player id {player_no} was not found in api')
             continue
 
