@@ -180,6 +180,7 @@ def teams_scraper(league_id, league_name, season):
         team["team_no"] = team_id
         teams_dict[team_id] = team
 
+
     scraper_logger.info(f' {len(teams_dict)} new teams were scraped successfully')
 
     return teams_dict
@@ -339,7 +340,6 @@ def get_game_stats_details(game_id, soup):
     """
 
     player_stats = []
-
     for table_team in ["1", "2"]:
         for tr in soup.find("div", class_="home-game__content__team-stats__content-team-" + table_team).select(
                 'tbody tr'):
@@ -430,8 +430,9 @@ def games_scraper(league_id, league_name, season, game_limit):
     player_stats = []
 
     for game_id in tq.tqdm(game_ids):
-        result = get_game_details(game_id)
-        if not result:
+        try:
+            result = get_game_details(game_id)
+        except AttributeError:
             continue
 
         games_info, team_games, player_stats_in_game = result
