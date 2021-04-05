@@ -8,6 +8,7 @@ import logging
 import db
 import pandas as pd
 
+
 # useful functions
 
 
@@ -84,6 +85,7 @@ def get_data_player_scraper(players):
 
     return players_dict
 
+
 # scraper
 
 def get_data_player_api(data):
@@ -156,7 +158,6 @@ def get_player_ids_data(season, players):
         return None
 
     players_ids_scraper = get_data_player_scraper(players)
-    print(players_ids_scraper)
     players_ids_api = get_data_player_api(data[apicfg.API_NBA_JSON_KEY_1][apicfg.API_NBA_JSON_KEY_2])
     players_ids = inner_join_dict(players_ids_api, players_ids_scraper)
 
